@@ -1,0 +1,66 @@
+name: Backtest
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install TA-Lib C library
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential wget
+          wget -q https://github.com/ta-lib/ta-lib/releases/download/v0.6.4/ta-lib-0.6.4-src.tar.gz
+          tar -xzf ta-lib-0.6.4-src.tar.gz
+          cd ta-lib-0.6.4
+          ./configure --prefix=/usr
+          make -j"$(nproc)"
+          sudo make install
+
+      - name: Install Python dependencies
+        run: pip install -r bot/requirements.txt
+
+      - name: Download data
+        working-directory: bot
+        run: |
+          freqtrade download-data \
+            --userdir user_data \
+            --exchange binance \
+            --pairs BTC/USDT ETH/USDT SOL/USDT \
+            --timeframes 15m \
+            --timerange 20250516-20250816
+
+      - name: Run backtest
+        working-directory: bot
+        run: |
+          freqtrade backtesting \
+            --userdir user_data \
+            --strategy FredbV2Strategy \
+            --timerange 20250516-20250816 \
+            --export trades
+
+      - name: Flatten summary for dashboard
+        working-directory: bot
+        run: python3 scripts/export_summary.py
+
+      - name: Publish summary to dashboard
+        run: |
+          mkdir -p dashboard/public
+          cp bot/user_data/backtest_results/latest.json dashboard/public/backtest-latest.json
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update backtest results"
+          file_pattern: "bot/user_data/backtest_results/latest.json dashboard/public/backtest-latest.json"
