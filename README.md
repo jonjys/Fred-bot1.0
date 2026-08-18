@@ -28,7 +28,7 @@ and hyperopt automatically.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/jonjys/Fred-bot1.0&project-name=fred-bot&root-directory=dashboard)
 
-## Important: Binance blocks GitHub Actions' IPs (confirmed)
+## Important: Binance blocks GitHub Actions' IPs (confirmed) — automatic OKX fallback
 
 `backtest.yml`'s first real run on GitHub Actions failed at the
 `download-data` step with:
@@ -41,8 +41,17 @@ ccxt.base.errors.ExchangeNotAvailable: binance GET https://api.binance.com/api/v
 This is Binance itself rejecting the request (HTTP 451), not a bug in this
 repo or a misconfigured secret — GitHub-hosted runners currently sit in an
 IP range Binance treats as restricted, the same way this development
-environment's IP was blocked. It is outside this repo's control. Options,
-roughly in order of effort:
+environment's IP was blocked. It is outside this repo's control.
+
+Both `backtest.yml` and `hyperopt.yml` now handle this automatically: they
+try Binance first, and if that download fails, they fall back to OKX (same
+pairs/timeframe) via `bot/user_data/config-okx-fallback.json`, an override
+config layered on top of `config.json` with `-c`. The dashboard is honest
+about which happened — `export_summary.py` records the exchange the data
+actually came from, and the dashboard shows an orange banner whenever it's
+not `binance`.
+
+To get Binance-specific numbers instead of the OKX fallback:
 - Re-run the workflow later (Binance's blocked-range list does shift over
   time, so a re-run can start succeeding with zero code changes).
 - Self-host the GitHub Actions runner on a VPS whose IP isn't blocked
@@ -55,14 +64,12 @@ roughly in order of effort:
   binance.com - re-verify the strategy's numbers there before trusting them).
 
 The strategy and the hyperopt pipeline were developed and validated end-to-end
-against real market data from an exchange reachable in this environment
-(OKX, same pairs/timeframe/period), confirming: no logic bugs, and a real,
-independently-reproduced backtest with **profit factor 2.13**, **+1.13%**
-total return, **0.38%** max drawdown, 23 trades, 52.2% winrate. Numbers on
-live Binance data will differ (different price history) but should be in a
-similar range using the same strategy logic and hyperopt process — the
-`backtest.yml`/`hyperopt.yml` workflows exist precisely to (re)generate the
-real Binance numbers once run somewhere Binance's API is reachable.
+against real OKX market data (same pairs/timeframe/period) before this was
+wired up, confirming: no logic bugs, and a real, independently-reproduced
+backtest with **profit factor 2.13**, **+1.13%** total return, **0.38%**
+max drawdown, 23 trades, 52.2% winrate. Numbers on live Binance data will
+differ (different price history) but should be in a similar range using the
+same strategy logic and hyperopt process.
 
 ## Notes
 

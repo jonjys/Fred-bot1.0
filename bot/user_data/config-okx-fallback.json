@@ -1,0 +1,9 @@
+{
+  "exchange": {
+    "name": "okx",
+    "key": "",
+    "secret": "",
+    "pair_whitelist": ["BTC/USDT", "ETH/USDT", "SOL/USDT"],
+    "pair_blacklist": []
+  }
+}

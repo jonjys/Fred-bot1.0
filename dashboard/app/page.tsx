@@ -43,7 +43,7 @@ export default function Home() {
           <h1 style={{ margin: 0, fontSize: 28 }}>Fred Bot Dashboard</h1>
           <p style={{ margin: "4px 0 0", color: "#9aa4b2", fontSize: 14 }}>
             {summary
-              ? `${summary.strategy} · ${summary.timerange}`
+              ? `${summary.strategy} · ${summary.exchange ?? "unknown exchange"} · ${summary.timerange}`
               : "No backtest results yet"}
           </p>
         </div>
@@ -69,6 +69,26 @@ export default function Home() {
           No backtest results published yet. Push to the repo to trigger the{" "}
           <code>backtest.yml</code> GitHub Action, or run{" "}
           <code>freqtrade backtesting</code> locally and click &quot;Run Backtest&quot;.
+        </div>
+      )}
+
+      {summary && summary.exchange !== "binance" && (
+        <div
+          style={{
+            background: "#2a1f0f",
+            border: "1px solid #5a4020",
+            borderRadius: 12,
+            padding: "12px 16px",
+            marginBottom: 24,
+            color: "#e8c07d",
+            fontSize: 13,
+          }}
+        >
+          These numbers are from <strong>{summary.exchange}</strong>, not Binance.
+          The <code>backtest.yml</code> workflow falls back to OKX when Binance
+          blocks the CI runner&apos;s IP (HTTP 451) — see the README. Re-run the
+          workflow, or run it yourself somewhere Binance is reachable, for
+          Binance-specific numbers.
         </div>
       )}
 

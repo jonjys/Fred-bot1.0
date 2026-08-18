@@ -25,15 +25,22 @@ def main() -> None:
     last_result = json.loads(last_result_path.read_text())
     zip_path = BACKTEST_DIR / last_result["latest_backtest"]
     json_name = zip_path.stem + ".json"
+    config_name = zip_path.stem + "_config.json"
 
     with zipfile.ZipFile(zip_path) as zf:
         result = json.loads(zf.read(json_name))
+        used_config = json.loads(zf.read(config_name))
 
     strategy_name = next(iter(result["strategy"]))
     strat = result["strategy"][strategy_name]
 
     summary = {
         "strategy": strategy_name,
+        # Which exchange this backtest's data actually came from. Not
+        # necessarily "binance" - backtest.yml falls back to OKX when
+        # Binance blocks the runner's IP (see README), and this field is
+        # how the dashboard/user can tell which happened for this run.
+        "exchange": used_config.get("exchange", {}).get("name"),
         "timerange": strat["timerange"],
         "generated_at": datetime.now(UTC).isoformat(),
         "total_trades": strat["total_trades"],

@@ -35,20 +35,34 @@ jobs:
       - name: Install Python dependencies
         run: pip install "freqtrade[hyperopt]" -r bot/requirements.txt
 
-      - name: Download data
+      - name: Download data (Binance, falls back to OKX if blocked)
+        id: download
         working-directory: bot
         run: |
-          freqtrade download-data \
+          if freqtrade download-data \
             --userdir user_data \
             --exchange binance \
             --pairs BTC/USDT ETH/USDT SOL/USDT \
             --timeframes 15m \
             --timerange 20250516-20250816
+          then
+            echo "config_args=-c user_data/config.json" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Binance data download failed (likely blocked this runner's IP with HTTP 451) - falling back to OKX for this run. See README for details."
+            freqtrade download-data \
+              --userdir user_data \
+              --exchange okx \
+              --pairs BTC/USDT ETH/USDT SOL/USDT \
+              --timeframes 15m \
+              --timerange 20250516-20250816
+            echo "config_args=-c user_data/config.json -c user_data/config-okx-fallback.json" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Run hyperopt
         working-directory: bot
         run: |
           freqtrade hyperopt \
+            ${{ steps.download.outputs.config_args }} \
             --userdir user_data \
             --strategy FredbV2Strategy \
             --hyperopt-loss ProfitFactorHyperOptLoss \
@@ -61,6 +75,7 @@ jobs:
         working-directory: bot
         run: |
           freqtrade backtesting \
+            ${{ steps.download.outputs.config_args }} \
             --userdir user_data \
             --strategy FredbV2Strategy \
             --timerange 20250516-20250816 \

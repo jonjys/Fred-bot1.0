@@ -13,6 +13,7 @@ export interface EquityPoint {
 
 export interface BacktestSummary {
   strategy: string;
+  exchange: string | null;
   timerange: string;
   generated_at: string;
   total_trades: number;
