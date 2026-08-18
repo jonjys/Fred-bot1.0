@@ -89,7 +89,7 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update hyperopt results and best params"
+          commit_message: "Update hyperopt results and best params [skip vercel]"
           file_pattern: >-
             bot/user_data/strategies/FredbV2Strategy.json
             bot/user_data/hyperopt_results/*.fthypt

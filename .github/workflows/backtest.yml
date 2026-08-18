@@ -76,5 +76,5 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update backtest results"
+          commit_message: "Update backtest results [skip vercel]"
           file_pattern: "bot/user_data/backtest_results/latest.json dashboard/public/backtest-latest.json"
