@@ -1,0 +1,97 @@
+name: Hyperopt
+
+on:
+  workflow_dispatch:
+    inputs:
+      epochs:
+        description: "Number of hyperopt epochs"
+        required: false
+        default: "500"
+
+permissions:
+  contents: write
+
+jobs:
+  hyperopt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install TA-Lib C library
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential wget
+          wget -q https://github.com/ta-lib/ta-lib/releases/download/v0.6.4/ta-lib-0.6.4-src.tar.gz
+          tar -xzf ta-lib-0.6.4-src.tar.gz
+          cd ta-lib-0.6.4
+          ./configure --prefix=/usr
+          make -j"$(nproc)"
+          sudo make install
+
+      - name: Install Python dependencies
+        run: pip install "freqtrade[hyperopt]" -r bot/requirements.txt
+
+      - name: Download data (Binance, falls back to OKX if blocked)
+        id: download
+        working-directory: bot
+        run: |
+          if freqtrade download-data \
+            --userdir user_data \
+            --exchange binance \
+            --pairs BTC/USDT ETH/USDT SOL/USDT \
+            --timeframes 15m \
+            --timerange 20250516-20250816
+          then
+            echo "config_args=-c user_data/config.json" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Binance data download failed (likely blocked this runner's IP with HTTP 451) - falling back to OKX for this run. See README for details."
+            freqtrade download-data \
+              --userdir user_data \
+              --exchange okx \
+              --pairs BTC/USDT ETH/USDT SOL/USDT \
+              --timeframes 15m \
+              --timerange 20250516-20250816
+            echo "config_args=-c user_data/config.json -c user_data/config-okx-fallback.json" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run hyperopt
+        working-directory: bot
+        run: |
+          freqtrade hyperopt \
+            ${{ steps.download.outputs.config_args }} \
+            --userdir user_data \
+            --strategy FredbV2Strategy \
+            --hyperopt-loss ProfitFactorHyperOptLoss \
+            --timerange 20250516-20250816 \
+            --epochs ${{ github.event.inputs.epochs }} \
+            --spaces buy sell roi stoploss trailing \
+            -j -1
+
+      - name: Re-run backtest with best params and refresh dashboard data
+        working-directory: bot
+        run: |
+          freqtrade backtesting \
+            ${{ steps.download.outputs.config_args }} \
+            --userdir user_data \
+            --strategy FredbV2Strategy \
+            --timerange 20250516-20250816 \
+            --export trades
+          python3 scripts/export_summary.py
+
+      - name: Publish summary to dashboard
+        run: |
+          mkdir -p dashboard/public
+          cp bot/user_data/backtest_results/latest.json dashboard/public/backtest-latest.json
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update hyperopt results and best params"
+          file_pattern: >-
+            bot/user_data/strategies/FredbV2Strategy.json
+            bot/user_data/hyperopt_results/*.fthypt
+            bot/user_data/backtest_results/latest.json
+            dashboard/public/backtest-latest.json
