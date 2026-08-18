@@ -28,19 +28,31 @@ and hyperopt automatically.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/jonjys/Fred-bot1.0&project-name=fred-bot&root-directory=dashboard)
 
-## Important: Binance access from cloud/CI IPs
+## Important: Binance blocks GitHub Actions' IPs (confirmed)
 
-Binance blocks API access from many cloud-datacenter IP ranges (returns
-HTTP 451). This affects some sandboxed/CI environments and is outside this
-repo's control. If `backtest.yml` or `hyperopt.yml` fail on the
-`download-data` step with a 451/`ExchangeNotAvailable` error, it means the
-GitHub Actions runner's IP is currently blocked by Binance. Options:
-- Re-run the workflow (Binance's IP block lists change over time).
-- Run the bot/backtest from a machine/VPS whose IP isn't blocked, and let
-  CI only rebuild the dashboard from committed results.
-- Point `bot/user_data/config.json`'s `exchange.name` at `binanceus` for
-  data download/backtesting if you're US-based (note: different, smaller
-  pair set and liquidity than binance.com).
+`backtest.yml`'s first real run on GitHub Actions failed at the
+`download-data` step with:
+
+```
+ccxt.base.errors.ExchangeNotAvailable: binance GET https://api.binance.com/api/v3/exchangeInfo 451
+"Service unavailable from a restricted location according to 'b. Eligibility'..."
+```
+
+This is Binance itself rejecting the request (HTTP 451), not a bug in this
+repo or a misconfigured secret — GitHub-hosted runners currently sit in an
+IP range Binance treats as restricted, the same way this development
+environment's IP was blocked. It is outside this repo's control. Options,
+roughly in order of effort:
+- Re-run the workflow later (Binance's blocked-range list does shift over
+  time, so a re-run can start succeeding with zero code changes).
+- Self-host the GitHub Actions runner on a VPS whose IP isn't blocked
+  (Actions supports this natively - "self-hosted runners").
+- Run `freqtrade download-data` / `backtesting` / `hyperopt` from your own
+  machine or a VPS, and let CI only rebuild the dashboard from the results
+  you commit.
+- Point `bot/user_data/config.json`'s `exchange.name` at `binanceus` if
+  you're US-based (note: different, smaller pair set and liquidity than
+  binance.com - re-verify the strategy's numbers there before trusting them).
 
 The strategy and the hyperopt pipeline were developed and validated end-to-end
 against real market data from an exchange reachable in this environment
