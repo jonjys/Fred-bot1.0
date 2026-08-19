@@ -93,11 +93,52 @@ jobs:
           mkdir -p dashboard/public
           cp bot/user_data/backtest_results/latest.json dashboard/public/backtest-latest.json
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Update hyperopt results and best params [skip vercel]"
-          file_pattern: >-
-            bot/user_data/strategies/FredbV2Strategy.json
-            bot/user_data/hyperopt_results/*.fthypt
-            bot/user_data/backtest_results/latest.json
+      # workflow_dispatch pins checkout to the commit SHA at *dispatch* time,
+      # not at job-start time - after an 8+ minute hyperopt run, main has
+      # near-certainly moved (e.g. a concurrent backtest.yml push-triggered
+      # run). A plain commit+push races that and silently loses its results
+      # to a rejected non-fast-forward push. Save our output files, hard
+      # reset onto the actual latest main, then reapply and commit - this
+      # can't conflict since we're always writing our own newer version of
+      # exactly these files, not merging git history.
+      - name: Commit and push results (rebase onto latest main first)
+        run: |
+          mkdir -p /tmp/hyperopt-out
+          cp bot/user_data/backtest_results/latest.json /tmp/hyperopt-out/latest.json
+          cp dashboard/public/backtest-latest.json /tmp/hyperopt-out/backtest-latest.json
+          cp bot/user_data/strategies/FredbV2Strategy.json /tmp/hyperopt-out/FredbV2Strategy.json
+          cp bot/user_data/hyperopt_results/*.fthypt /tmp/hyperopt-out/ 2>/dev/null || true
+
+          git fetch origin "${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
+
+          mkdir -p bot/user_data/backtest_results dashboard/public bot/user_data/hyperopt_results
+          cp /tmp/hyperopt-out/latest.json bot/user_data/backtest_results/latest.json
+          cp /tmp/hyperopt-out/backtest-latest.json dashboard/public/backtest-latest.json
+          cp /tmp/hyperopt-out/FredbV2Strategy.json bot/user_data/strategies/FredbV2Strategy.json
+          cp /tmp/hyperopt-out/*.fthypt bot/user_data/hyperopt_results/ 2>/dev/null || true
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bot/user_data/strategies/FredbV2Strategy.json \
+            bot/user_data/hyperopt_results/*.fthypt \
+            bot/user_data/backtest_results/latest.json \
             dashboard/public/backtest-latest.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Update hyperopt results and best params [skip vercel]"
+
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt), retrying against latest main..."
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
+            sleep 3
+          done
+          echo "::error::Failed to push hyperopt results after 5 attempts."
+          exit 1

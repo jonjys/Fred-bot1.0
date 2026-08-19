@@ -81,7 +81,40 @@ jobs:
           mkdir -p dashboard/public
           cp bot/user_data/backtest_results/latest.json dashboard/public/backtest-latest.json
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Update backtest results [skip vercel]"
-          file_pattern: "bot/user_data/backtest_results/latest.json dashboard/public/backtest-latest.json"
+      # Same reset-and-reapply pattern as hyperopt.yml: avoids racing a
+      # concurrent hyperopt.yml push to the same files (see there for why a
+      # plain commit+push isn't safe here).
+      - name: Commit and push results (rebase onto latest main first)
+        run: |
+          mkdir -p /tmp/backtest-out
+          cp bot/user_data/backtest_results/latest.json /tmp/backtest-out/latest.json
+          cp dashboard/public/backtest-latest.json /tmp/backtest-out/backtest-latest.json
+
+          git fetch origin "${GITHUB_REF_NAME}"
+          git reset --hard "origin/${GITHUB_REF_NAME}"
+
+          mkdir -p bot/user_data/backtest_results dashboard/public
+          cp /tmp/backtest-out/latest.json bot/user_data/backtest_results/latest.json
+          cp /tmp/backtest-out/backtest-latest.json dashboard/public/backtest-latest.json
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bot/user_data/backtest_results/latest.json dashboard/public/backtest-latest.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Update backtest results [skip vercel]"
+
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt), retrying against latest main..."
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
+            sleep 3
+          done
+          echo "::error::Failed to push backtest results after 5 attempts."
+          exit 1
