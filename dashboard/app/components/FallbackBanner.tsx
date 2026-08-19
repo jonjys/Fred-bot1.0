@@ -6,42 +6,19 @@ export default function FallbackBanner({ exchange }: { exchange: string }) {
   const [open, setOpen] = useState(true);
 
   return (
-    <div
-      style={{
-        background: "#1f160a",
-        border: "1px solid #3d2c14",
-        borderRadius: 10,
-        marginBottom: 16,
-        color: "#e8c07d",
-        fontSize: 12,
-        overflow: "hidden",
-      }}
-    >
+    <div className="mb-3 overflow-hidden rounded-lg border border-warn/30 bg-warn/10 text-[12px] text-warn">
       <button
         onClick={() => setOpen((v) => !v)}
-        style={{
-          width: "100%",
-          background: "none",
-          border: "none",
-          color: "inherit",
-          font: "inherit",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 8,
-          padding: "8px 12px",
-          cursor: "pointer",
-          textAlign: "left",
-        }}
+        className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left"
         aria-expanded={open}
       >
         <span>
           ⚠ Data from <strong>{exchange}</strong>, not Binance
         </span>
-        <span style={{ opacity: 0.7, fontSize: 11 }}>{open ? "hide" : "why?"}</span>
+        <span className="text-[11px] opacity-70">{open ? "hide" : "why?"}</span>
       </button>
       {open && (
-        <p style={{ margin: 0, padding: "0 12px 10px", lineHeight: 1.4 }}>
+        <p className="m-0 px-3 pb-2.5 leading-snug">
           The <code>backtest.yml</code> workflow falls back to OKX when Binance
           blocks the CI runner&apos;s IP (HTTP 451) — see the README. Re-run
           the workflow, or run it somewhere Binance is reachable, for

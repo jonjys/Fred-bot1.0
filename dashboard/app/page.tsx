@@ -1,6 +1,18 @@
+import CollapsibleSection from "./components/CollapsibleSection";
+import CommandPalette, { type PaletteItem } from "./components/CommandPalette";
+import DistributionHistogram from "./components/DistributionHistogram";
+import DrawdownChart from "./components/DrawdownChart";
+import EdgeBadge from "./components/EdgeBadge";
 import EquityChart from "./components/EquityChart";
+import ExportPngButton from "./components/ExportPngButton";
 import FallbackBanner from "./components/FallbackBanner";
+import HyperoptPanel from "./components/HyperoptPanel";
+import LiveBadge from "./components/LiveBadge";
+import PerPairPanel from "./components/PerPairPanel";
 import RunBacktestButton from "./components/RunBacktestButton";
+import StatCard from "./components/StatCard";
+import StreakBadge from "./components/StreakBadge";
+import WinrateTrendChart from "./components/WinrateTrendChart";
 import { getSummary } from "./lib/getSummary";
 
 // Re-read backtest-latest.json on every request instead of baking it into
@@ -8,118 +20,59 @@ import { getSummary } from "./lib/getSummary";
 // up without a full redeploy.
 export const dynamic = "force-dynamic";
 
-const CARD = "#111114";
-const BORDER = "#222226";
-const LIVE = "#3DFF8A";
-const TEXT = "#e6e9ef";
-const MUTED = "#9aa4b2";
-
-function StatCard({ label, value, accent }: { label: string; value: string; accent?: string }) {
-  return (
-    <div
-      style={{
-        background: CARD,
-        border: `1px solid ${BORDER}`,
-        borderRadius: 10,
-        padding: "10px 12px",
-      }}
-    >
-      <div style={{ fontSize: 11, color: MUTED, marginBottom: 4 }}>{label}</div>
-      <div style={{ fontSize: 20, fontWeight: 700, color: accent ?? TEXT, lineHeight: 1.1 }}>
-        {value}
-      </div>
-    </div>
-  );
-}
-
-function LiveBadge() {
-  return (
-    <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 5,
-        fontSize: 10,
-        fontWeight: 700,
-        letterSpacing: 0.5,
-        color: LIVE,
-        border: `1px solid ${LIVE}40`,
-        background: `${LIVE}14`,
-        borderRadius: 999,
-        padding: "3px 8px",
-      }}
-    >
-      <span
-        style={{
-          width: 6,
-          height: 6,
-          borderRadius: "50%",
-          background: LIVE,
-          boxShadow: `0 0 6px ${LIVE}`,
-        }}
-      />
-      LIVE
-    </span>
-  );
-}
-
 export default function Home() {
   const summary = getSummary();
 
-  return (
-    <main style={{ maxWidth: 720, margin: "0 auto", padding: "16px 12px 40px", color: TEXT }}>
-      <style>{`
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 8px;
-        }
-        @media (min-width: 560px) {
-          .stats-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-        }
-        table.pairs { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-        table.pairs th, table.pairs td { padding: 7px 10px; white-space: nowrap; }
-      `}</style>
+  const paletteItems: PaletteItem[] = summary
+    ? [
+        { label: "Total %", group: "metric", targetId: "stat-total-pct" },
+        { label: "Profit Factor", group: "metric", targetId: "stat-pf" },
+        { label: "Winrate", group: "metric", targetId: "stat-winrate" },
+        { label: "Max Drawdown", group: "metric", targetId: "stat-maxdd" },
+        { label: "Expectancy", group: "metric", targetId: "stat-expectancy" },
+        { label: "Current Streak", group: "metric", targetId: "stat-streak" },
+        { label: "Equity Curve", group: "section", targetId: "section-performance" },
+        { label: "Winrate Story", group: "section", targetId: "section-winrate-story" },
+        { label: "Per-pair results", group: "section", targetId: "section-pairs" },
+        { label: "Open Trades", group: "section", targetId: "section-open-trades" },
+        ...summary.pairs.map((p) => ({
+          label: p.pair,
+          group: "pair",
+          targetId: "section-pairs",
+        })),
+      ]
+    : [];
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          flexWrap: "wrap",
-          gap: 10,
-          marginBottom: 14,
-        }}
-      >
-        <div style={{ minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-            <h1 style={{ margin: 0, fontSize: 20 }}>Fred Bot Dashboard</h1>
+  return (
+    <main className="mx-auto max-w-[1400px] px-3 py-3 lg:px-5 lg:py-3" id="dashboard-capture">
+      {summary && <CommandPalette items={paletteItems} />}
+
+      <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="text-lg font-bold lg:text-xl">Fred Bot Dashboard</h1>
             {summary && <LiveBadge />}
+            {summary && (
+              <EdgeBadge profitFactor={summary.profit_factor} winratePct={summary.winrate_pct} />
+            )}
           </div>
-          <p style={{ margin: "3px 0 0", color: MUTED, fontSize: 12 }}>
+          <p className="mt-0.5 text-[11px] text-muted">
             {summary
               ? `${summary.strategy} · ${summary.exchange ?? "unknown exchange"} · ${summary.timerange}`
               : "No backtest results yet"}
           </p>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4 }}>
-          <RunBacktestButton />
-          <span style={{ fontSize: 10, color: "#6b7280" }}>Local only</span>
+        <div className="flex items-center gap-2">
+          {summary && <ExportPngButton targetId="dashboard-capture" />}
+          <div className="flex flex-col items-end gap-0.5">
+            <RunBacktestButton />
+            <span className="text-[9px] text-zinc-600">Local only · ⌘K to search</span>
+          </div>
         </div>
       </div>
 
       {!summary && (
-        <div
-          style={{
-            background: CARD,
-            border: `1px dashed ${BORDER}`,
-            borderRadius: 10,
-            padding: 24,
-            color: MUTED,
-            textAlign: "center",
-            fontSize: 13,
-          }}
-        >
+        <div className="rounded-lg border border-dashed border-border bg-card p-8 text-center text-[13px] text-muted">
           No backtest results published yet. Push to the repo to trigger the{" "}
           <code>backtest.yml</code> GitHub Action, or run{" "}
           <code>freqtrade backtesting</code> locally and click &quot;Run Backtest&quot;.
@@ -131,80 +84,122 @@ export default function Home() {
       )}
 
       {summary && (
-        <>
-          <div className="stats-grid" style={{ marginBottom: 16 }}>
+        <div className="space-y-2.5">
+          <HyperoptPanel
+            hyperopt={summary.hyperopt}
+            strategyVersion={summary.strategy_version}
+            profitFactor={summary.profit_factor}
+          />
+
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-7">
             <StatCard
+              id="stat-total-pct"
               label="Total %"
-              value={`${summary.total_profit_pct >= 0 ? "+" : ""}${summary.total_profit_pct}%`}
-              accent={summary.total_profit_pct >= 0 ? "#3ddc97" : "#ff6b6b"}
+              value={summary.total_profit_pct}
+              decimals={2}
+              suffix="%"
+              prefix={summary.total_profit_pct >= 0 ? "+" : ""}
+              accent={summary.total_profit_pct >= 0 ? "profit" : "loss"}
             />
             <StatCard
+              id="stat-pf"
               label="Profit Factor"
-              value={summary.profit_factor !== null ? summary.profit_factor.toFixed(2) : "—"}
+              value={summary.profit_factor ?? 0}
+              decimals={2}
               accent={
-                summary.profit_factor !== null && summary.profit_factor >= 1.5
-                  ? "#3ddc97"
-                  : "#ff6b6b"
+                summary.profit_factor !== null && summary.profit_factor >= 1.5 ? "profit" : "loss"
               }
             />
-            <StatCard label="Winrate" value={`${summary.winrate_pct}%`} />
-            <StatCard label="Max DD" value={`${summary.max_drawdown_pct}%`} />
-            <StatCard label="Trades" value={`${summary.total_trades}`} />
+            <StatCard
+              id="stat-winrate"
+              label="Winrate"
+              value={summary.winrate_pct}
+              decimals={1}
+              suffix="%"
+            />
+            <StatCard
+              id="stat-maxdd"
+              label="Max Drawdown"
+              value={summary.max_drawdown_pct}
+              decimals={2}
+              suffix="%"
+              accent="loss"
+            />
+            <StatCard label="Trades" value={summary.total_trades} />
+            <StatCard
+              id="stat-expectancy"
+              label="Expectancy"
+              value={summary.expectancy}
+              decimals={3}
+            />
+            <StatCard
+              label="Avg Win"
+              value={summary.profit_split.avg_win_abs}
+              decimals={2}
+              prefix="+"
+              accent="profit"
+            />
+            <StatCard
+              label="Avg Loss"
+              value={summary.profit_split.avg_loss_abs}
+              decimals={2}
+              accent="loss"
+            />
+            <StatCard label="Sharpe" value={summary.sharpe} decimals={2} />
+            <StatCard label="Sortino" value={summary.sortino} decimals={2} />
+            <StatCard label="Max Win Streak" value={summary.max_consecutive_wins} accent="profit" />
+            <StatCard label="Max Loss Streak" value={summary.max_consecutive_losses} accent="loss" />
+            <div id="stat-streak" className="rounded-lg border border-border bg-card p-2.5">
+              <div className="mb-1 truncate text-[10.5px] text-muted">Current Streak</div>
+              <StreakBadge streak={summary.current_streak} />
+            </div>
           </div>
 
-          <section style={{ marginBottom: 16 }}>
-            <h2 style={{ fontSize: 13, color: MUTED, fontWeight: 500, margin: "0 0 6px" }}>
-              Equity Curve
-            </h2>
-            <div
-              style={{
-                background: CARD,
-                border: `1px solid ${BORDER}`,
-                borderRadius: 10,
-                padding: 10,
-              }}
-            >
-              <EquityChart data={summary.equity_curve} />
+          <CollapsibleSection id="section-performance" title="Equity &amp; Drawdown">
+            <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+              <div className="rounded-lg border border-border bg-card p-2.5 lg:col-span-2">
+                <EquityChart data={summary.equity_curve} />
+              </div>
+              <div className="rounded-lg border border-border bg-card p-2.5">
+                <div className="mb-1 text-[10.5px] text-muted">Drawdown</div>
+                <DrawdownChart data={summary.equity_curve} />
+              </div>
             </div>
-          </section>
+          </CollapsibleSection>
 
-          <section>
-            <h2 style={{ fontSize: 13, color: MUTED, fontWeight: 500, margin: "0 0 6px" }}>
-              Per-pair results
-            </h2>
-            <div
-              style={{
-                background: CARD,
-                border: `1px solid ${BORDER}`,
-                borderRadius: 10,
-                overflowX: "auto",
-              }}
-            >
-              <table className="pairs">
-                <thead>
-                  <tr style={{ textAlign: "left", color: MUTED, borderBottom: `1px solid ${BORDER}` }}>
-                    <th>Pair</th>
-                    <th>Trades</th>
-                    <th>Avg %</th>
-                    <th>Total USDT</th>
-                    <th>Win%</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {summary.pairs.map((p) => (
-                    <tr key={p.pair} style={{ borderBottom: `1px solid ${BORDER}` }}>
-                      <td>{p.pair}</td>
-                      <td>{p.trades}</td>
-                      <td>{p.avg_profit_pct}%</td>
-                      <td>{p.total_profit_abs}</td>
-                      <td>{p.winrate_pct}%</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <CollapsibleSection id="section-winrate-story" title="Winrate Story">
+            <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+              <div className="rounded-lg border border-border bg-card p-2.5">
+                <div className="mb-1 text-[10.5px] text-muted">
+                  Rolling winrate (last {summary.winrate_trend.length} trades)
+                </div>
+                <WinrateTrendChart data={summary.winrate_trend} />
+              </div>
+              <div className="rounded-lg border border-border bg-card p-2.5">
+                <div className="mb-1 text-[10.5px] text-muted">
+                  Trade size distribution (profit %)
+                </div>
+                <DistributionHistogram data={summary.win_loss_sizes} />
+              </div>
             </div>
-          </section>
-        </>
+          </CollapsibleSection>
+
+          <CollapsibleSection id="section-pairs" title="Per-pair results">
+            <div className="rounded-lg border border-border bg-card p-2.5">
+              <PerPairPanel pairs={summary.pairs} />
+            </div>
+          </CollapsibleSection>
+
+          <CollapsibleSection id="section-open-trades" title="Open Trades">
+            <div className="rounded-lg border border-border bg-card p-3 text-[12px] text-muted">
+              {summary.open_trades.length === 0
+                ? "No open positions — every trade in this backtest window closed before the end date."
+                : `${summary.open_trades.length} position(s) still open at backtest end: ${summary.open_trades
+                    .map((t) => t.pair)
+                    .join(", ")}`}
+            </div>
+          </CollapsibleSection>
+        </div>
       )}
     </main>
   );

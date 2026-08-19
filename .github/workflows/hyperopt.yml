@@ -77,6 +77,19 @@ jobs:
             --spaces buy sell roi stoploss trailing \
             -j -1
 
+      - name: Record which run produced these params
+        working-directory: bot
+        run: |
+          python3 -c "
+          import json, datetime
+          json.dump({
+              'epochs': '${{ github.event.inputs.epochs }}',
+              'loss_function': 'ProfitFactorHyperOptLoss',
+              'spaces': 'buy sell roi stoploss trailing',
+              'run_at': datetime.datetime.now(datetime.UTC).isoformat(),
+          }, open('user_data/hyperopt_results/last_run.json', 'w'), indent=2)
+          "
+
       - name: Re-run backtest with best params and refresh dashboard data
         working-directory: bot
         run: |
@@ -107,6 +120,7 @@ jobs:
           cp bot/user_data/backtest_results/latest.json /tmp/hyperopt-out/latest.json
           cp dashboard/public/backtest-latest.json /tmp/hyperopt-out/backtest-latest.json
           cp bot/user_data/strategies/FredbV2Strategy.json /tmp/hyperopt-out/FredbV2Strategy.json
+          cp bot/user_data/hyperopt_results/last_run.json /tmp/hyperopt-out/last_run.json
           cp bot/user_data/hyperopt_results/*.fthypt /tmp/hyperopt-out/ 2>/dev/null || true
 
           git fetch origin "${GITHUB_REF_NAME}"
@@ -116,11 +130,13 @@ jobs:
           cp /tmp/hyperopt-out/latest.json bot/user_data/backtest_results/latest.json
           cp /tmp/hyperopt-out/backtest-latest.json dashboard/public/backtest-latest.json
           cp /tmp/hyperopt-out/FredbV2Strategy.json bot/user_data/strategies/FredbV2Strategy.json
+          cp /tmp/hyperopt-out/last_run.json bot/user_data/hyperopt_results/last_run.json
           cp /tmp/hyperopt-out/*.fthypt bot/user_data/hyperopt_results/ 2>/dev/null || true
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add bot/user_data/strategies/FredbV2Strategy.json \
+            bot/user_data/hyperopt_results/last_run.json \
             bot/user_data/hyperopt_results/*.fthypt \
             bot/user_data/backtest_results/latest.json \
             dashboard/public/backtest-latest.json

@@ -24,16 +24,11 @@ export default function RunBacktestButton() {
     <button
       onClick={run}
       disabled={status === "running"}
-      style={{
-        background: status === "running" ? "#222226" : "#4f9dff",
-        color: status === "running" ? "#9aa4b2" : "#0A0A0B",
-        border: "none",
-        borderRadius: 7,
-        padding: "6px 12px",
-        fontSize: 12,
-        fontWeight: 600,
-        cursor: status === "running" ? "default" : "pointer",
-      }}
+      className={`rounded-md px-3 py-1.5 text-[12px] font-semibold ${
+        status === "running"
+          ? "cursor-default bg-[#222226] text-muted"
+          : "bg-[#4f9dff] text-bg hover:bg-[#6babff]"
+      }`}
     >
       {status === "running"
         ? "Running backtest…"
