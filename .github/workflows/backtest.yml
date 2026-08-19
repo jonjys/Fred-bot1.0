@@ -8,6 +8,13 @@ on:
 permissions:
   contents: write
 
+# Both this workflow and hyperopt.yml auto-commit results back to the same
+# branch. Without this, two runs landing close together race to push and
+# one silently loses (non-fast-forward) - queue them instead of racing.
+concurrency:
+  group: ci-results-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   backtest:
     runs-on: ubuntu-latest

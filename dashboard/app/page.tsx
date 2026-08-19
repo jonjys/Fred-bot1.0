@@ -1,4 +1,5 @@
 import EquityChart from "./components/EquityChart";
+import FallbackBanner from "./components/FallbackBanner";
 import RunBacktestButton from "./components/RunBacktestButton";
 import { getSummary } from "./lib/getSummary";
 
@@ -7,20 +8,58 @@ import { getSummary } from "./lib/getSummary";
 // up without a full redeploy.
 export const dynamic = "force-dynamic";
 
+const CARD = "#111114";
+const BORDER = "#222226";
+const LIVE = "#3DFF8A";
+const TEXT = "#e6e9ef";
+const MUTED = "#9aa4b2";
+
 function StatCard({ label, value, accent }: { label: string; value: string; accent?: string }) {
   return (
     <div
       style={{
-        background: "#161a23",
-        border: "1px solid #2a2f3a",
-        borderRadius: 12,
-        padding: "16px 20px",
-        minWidth: 140,
+        background: CARD,
+        border: `1px solid ${BORDER}`,
+        borderRadius: 10,
+        padding: "10px 12px",
       }}
     >
-      <div style={{ fontSize: 12, color: "#9aa4b2", marginBottom: 6 }}>{label}</div>
-      <div style={{ fontSize: 24, fontWeight: 700, color: accent ?? "#e6e9ef" }}>{value}</div>
+      <div style={{ fontSize: 11, color: MUTED, marginBottom: 4 }}>{label}</div>
+      <div style={{ fontSize: 20, fontWeight: 700, color: accent ?? TEXT, lineHeight: 1.1 }}>
+        {value}
+      </div>
     </div>
+  );
+}
+
+function LiveBadge() {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 5,
+        fontSize: 10,
+        fontWeight: 700,
+        letterSpacing: 0.5,
+        color: LIVE,
+        border: `1px solid ${LIVE}40`,
+        background: `${LIVE}14`,
+        borderRadius: 999,
+        padding: "3px 8px",
+      }}
+    >
+      <span
+        style={{
+          width: 6,
+          height: 6,
+          borderRadius: "50%",
+          background: LIVE,
+          boxShadow: `0 0 6px ${LIVE}`,
+        }}
+      />
+      LIVE
+    </span>
   );
 }
 
@@ -28,42 +67,57 @@ export default function Home() {
   const summary = getSummary();
 
   return (
-    <main style={{ maxWidth: 1000, margin: "0 auto", padding: "40px 24px" }}>
+    <main style={{ maxWidth: 720, margin: "0 auto", padding: "16px 12px 40px", color: TEXT }}>
+      <style>{`
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+        }
+        @media (min-width: 560px) {
+          .stats-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+        }
+        table.pairs { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+        table.pairs th, table.pairs td { padding: 7px 10px; white-space: nowrap; }
+      `}</style>
+
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "flex-start",
           flexWrap: "wrap",
-          gap: 16,
-          marginBottom: 32,
+          gap: 10,
+          marginBottom: 14,
         }}
       >
-        <div>
-          <h1 style={{ margin: 0, fontSize: 28 }}>Fred Bot Dashboard</h1>
-          <p style={{ margin: "4px 0 0", color: "#9aa4b2", fontSize: 14 }}>
+        <div style={{ minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+            <h1 style={{ margin: 0, fontSize: 20 }}>Fred Bot Dashboard</h1>
+            {summary && <LiveBadge />}
+          </div>
+          <p style={{ margin: "3px 0 0", color: MUTED, fontSize: 12 }}>
             {summary
               ? `${summary.strategy} · ${summary.exchange ?? "unknown exchange"} · ${summary.timerange}`
               : "No backtest results yet"}
           </p>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4 }}>
           <RunBacktestButton />
-          <span style={{ fontSize: 11, color: "#6b7280" }}>
-            Only works when run locally next to a freqtrade install
-          </span>
+          <span style={{ fontSize: 10, color: "#6b7280" }}>Local only</span>
         </div>
       </div>
 
       {!summary && (
         <div
           style={{
-            background: "#161a23",
-            border: "1px dashed #2a2f3a",
-            borderRadius: 12,
-            padding: 32,
-            color: "#9aa4b2",
+            background: CARD,
+            border: `1px dashed ${BORDER}`,
+            borderRadius: 10,
+            padding: 24,
+            color: MUTED,
             textAlign: "center",
+            fontSize: 13,
           }}
         >
           No backtest results published yet. Push to the repo to trigger the{" "}
@@ -73,35 +127,12 @@ export default function Home() {
       )}
 
       {summary && summary.exchange !== "binance" && (
-        <div
-          style={{
-            background: "#2a1f0f",
-            border: "1px solid #5a4020",
-            borderRadius: 12,
-            padding: "12px 16px",
-            marginBottom: 24,
-            color: "#e8c07d",
-            fontSize: 13,
-          }}
-        >
-          These numbers are from <strong>{summary.exchange}</strong>, not Binance.
-          The <code>backtest.yml</code> workflow falls back to OKX when Binance
-          blocks the CI runner&apos;s IP (HTTP 451) — see the README. Re-run the
-          workflow, or run it yourself somewhere Binance is reachable, for
-          Binance-specific numbers.
-        </div>
+        <FallbackBanner exchange={summary.exchange ?? "unknown"} />
       )}
 
       {summary && (
         <>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 12,
-              marginBottom: 32,
-            }}
-          >
+          <div className="stats-grid" style={{ marginBottom: 16 }}>
             <StatCard
               label="Total %"
               value={`${summary.total_profit_pct >= 0 ? "+" : ""}${summary.total_profit_pct}%`}
@@ -117,18 +148,20 @@ export default function Home() {
               }
             />
             <StatCard label="Winrate" value={`${summary.winrate_pct}%`} />
-            <StatCard label="Max Drawdown" value={`${summary.max_drawdown_pct}%`} />
+            <StatCard label="Max DD" value={`${summary.max_drawdown_pct}%`} />
             <StatCard label="Trades" value={`${summary.total_trades}`} />
           </div>
 
-          <section style={{ marginBottom: 32 }}>
-            <h2 style={{ fontSize: 16, color: "#9aa4b2", fontWeight: 500 }}>Equity Curve</h2>
+          <section style={{ marginBottom: 16 }}>
+            <h2 style={{ fontSize: 13, color: MUTED, fontWeight: 500, margin: "0 0 6px" }}>
+              Equity Curve
+            </h2>
             <div
               style={{
-                background: "#161a23",
-                border: "1px solid #2a2f3a",
-                borderRadius: 12,
-                padding: 16,
+                background: CARD,
+                border: `1px solid ${BORDER}`,
+                borderRadius: 10,
+                padding: 10,
               }}
             >
               <EquityChart data={summary.equity_curve} />
@@ -136,33 +169,35 @@ export default function Home() {
           </section>
 
           <section>
-            <h2 style={{ fontSize: 16, color: "#9aa4b2", fontWeight: 500 }}>Per-pair results</h2>
+            <h2 style={{ fontSize: 13, color: MUTED, fontWeight: 500, margin: "0 0 6px" }}>
+              Per-pair results
+            </h2>
             <div
               style={{
-                background: "#161a23",
-                border: "1px solid #2a2f3a",
-                borderRadius: 12,
-                overflow: "hidden",
+                background: CARD,
+                border: `1px solid ${BORDER}`,
+                borderRadius: 10,
+                overflowX: "auto",
               }}
             >
-              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+              <table className="pairs">
                 <thead>
-                  <tr style={{ textAlign: "left", color: "#9aa4b2", borderBottom: "1px solid #2a2f3a" }}>
-                    <th style={{ padding: "10px 16px" }}>Pair</th>
-                    <th style={{ padding: "10px 16px" }}>Trades</th>
-                    <th style={{ padding: "10px 16px" }}>Avg %</th>
-                    <th style={{ padding: "10px 16px" }}>Total USDT</th>
-                    <th style={{ padding: "10px 16px" }}>Win%</th>
+                  <tr style={{ textAlign: "left", color: MUTED, borderBottom: `1px solid ${BORDER}` }}>
+                    <th>Pair</th>
+                    <th>Trades</th>
+                    <th>Avg %</th>
+                    <th>Total USDT</th>
+                    <th>Win%</th>
                   </tr>
                 </thead>
                 <tbody>
                   {summary.pairs.map((p) => (
-                    <tr key={p.pair} style={{ borderBottom: "1px solid #1f232c" }}>
-                      <td style={{ padding: "10px 16px" }}>{p.pair}</td>
-                      <td style={{ padding: "10px 16px" }}>{p.trades}</td>
-                      <td style={{ padding: "10px 16px" }}>{p.avg_profit_pct}%</td>
-                      <td style={{ padding: "10px 16px" }}>{p.total_profit_abs}</td>
-                      <td style={{ padding: "10px 16px" }}>{p.winrate_pct}%</td>
+                    <tr key={p.pair} style={{ borderBottom: `1px solid ${BORDER}` }}>
+                      <td>{p.pair}</td>
+                      <td>{p.trades}</td>
+                      <td>{p.avg_profit_pct}%</td>
+                      <td>{p.total_profit_abs}</td>
+                      <td>{p.winrate_pct}%</td>
                     </tr>
                   ))}
                 </tbody>

@@ -13,17 +13,17 @@ import type { EquityPoint } from "../lib/types";
 
 export default function EquityChart({ data }: { data: EquityPoint[] }) {
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={data} margin={{ top: 8, right: 24, bottom: 8, left: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#2a2f3a" />
-        <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#9aa4b2" }} minTickGap={40} />
+    <ResponsiveContainer width="100%" height={220}>
+      <LineChart data={data} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
+        <CartesianGrid strokeDasharray="3 3" stroke="#222226" />
+        <XAxis dataKey="date" tick={{ fontSize: 10, fill: "#9aa4b2" }} minTickGap={40} />
         <YAxis
           domain={["auto", "auto"]}
-          tick={{ fontSize: 11, fill: "#9aa4b2" }}
-          width={70}
+          tick={{ fontSize: 10, fill: "#9aa4b2" }}
+          width={56}
         />
         <Tooltip
-          contentStyle={{ background: "#161a23", border: "1px solid #2a2f3a" }}
+          contentStyle={{ background: "#111114", border: "1px solid #222226" }}
           labelStyle={{ color: "#e6e9ef" }}
         />
         <Line

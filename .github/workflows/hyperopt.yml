@@ -11,6 +11,12 @@ on:
 permissions:
   contents: write
 
+# Shares a queue with backtest.yml's group so their result commits to the
+# same branch don't race each other (see backtest.yml for why).
+concurrency:
+  group: ci-results-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   hyperopt:
     runs-on: ubuntu-latest

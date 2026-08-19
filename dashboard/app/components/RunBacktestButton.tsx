@@ -25,12 +25,12 @@ export default function RunBacktestButton() {
       onClick={run}
       disabled={status === "running"}
       style={{
-        background: status === "running" ? "#2a2f3a" : "#4f9dff",
-        color: status === "running" ? "#9aa4b2" : "#0b0d12",
+        background: status === "running" ? "#222226" : "#4f9dff",
+        color: status === "running" ? "#9aa4b2" : "#0A0A0B",
         border: "none",
-        borderRadius: 8,
-        padding: "10px 18px",
-        fontSize: 14,
+        borderRadius: 7,
+        padding: "6px 12px",
+        fontSize: 12,
         fontWeight: 600,
         cursor: status === "running" ? "default" : "pointer",
       }}
