@@ -3,530 +3,540 @@
   "strategy_version": "FredbV2.1",
   "exchange": "okx",
   "timerange": "20250516-20250816",
-  "generated_at": "2026-08-20T16:58:27.979878+00:00",
-  "total_trades": 20,
-  "total_profit_pct": 0.97,
-  "total_profit_abs": 9.688,
-  "profit_factor": 2.16,
-  "winrate_pct": 55.0,
-  "wins": 11,
-  "losses": 9,
+  "generated_at": "2026-08-20T17:04:23.513337+00:00",
+  "total_trades": 21,
+  "total_profit_pct": 1.03,
+  "total_profit_abs": 10.332,
+  "profit_factor": 2.156,
+  "winrate_pct": 71.43,
+  "wins": 15,
+  "losses": 6,
   "draws": 0,
-  "max_drawdown_pct": 0.31,
-  "sharpe": 1.43,
-  "sortino": 4.04,
-  "expectancy": 0.4844,
-  "expectancy_ratio": 0.522,
-  "max_consecutive_wins": 4,
-  "max_consecutive_losses": 3,
+  "max_drawdown_pct": 0.38,
+  "sharpe": 1.59,
+  "sortino": 4.62,
+  "expectancy": 0.492,
+  "expectancy_ratio": 0.33,
+  "max_consecutive_wins": 7,
+  "max_consecutive_losses": 2,
   "backtest_start": "2025-05-18 14:30:00",
   "backtest_end": "2025-08-16 00:00:00",
   "pairs": [
     {
       "pair": "SOL/USDT",
       "trades": 11,
-      "avg_profit_pct": 0.76,
-      "total_profit_abs": 8.401,
-      "winrate_pct": 72.73,
+      "avg_profit_pct": 0.85,
+      "total_profit_abs": 9.311,
+      "winrate_pct": 81.82,
       "sparkline": [
-        -2.123,
-        -0.269,
-        1.665,
-        0.54,
-        2.476,
-        3.098,
-        3.23,
-        5.05,
-        4.728,
-        6.533,
-        8.401
+        -2.526,
+        -0.672,
+        1.262,
+        -0.242,
+        1.694,
+        1.694,
+        2.815,
+        4.635,
+        5.637,
+        7.443,
+        9.311
+      ]
+    },
+    {
+      "pair": "ETH/USDT",
+      "trades": 1,
+      "avg_profit_pct": 1.31,
+      "total_profit_abs": 1.314,
+      "winrate_pct": 100.0,
+      "sparkline": [
+        1.314
       ]
     },
     {
       "pair": "BTC/USDT",
       "trades": 9,
-      "avg_profit_pct": 0.14,
-      "total_profit_abs": 1.287,
-      "winrate_pct": 33.33,
+      "avg_profit_pct": -0.03,
+      "total_profit_abs": -0.293,
+      "winrate_pct": 55.56,
       "sparkline": [
-        -0.99,
-        1.399,
-        4.483,
-        3.674,
-        3.084,
-        2.081,
-        2.673,
-        1.587,
-        1.287
+        -1.278,
+        0.619,
+        1.985,
+        0.918,
+        1.494,
+        0.225,
+        0.465,
+        0.999,
+        -0.293
       ]
-    },
-    {
-      "pair": "ETH/USDT",
-      "trades": 0,
-      "avg_profit_pct": 0.0,
-      "total_profit_abs": 0.0,
-      "winrate_pct": 0.0,
-      "sparkline": []
     }
   ],
   "equity_curve": [
     {
       "date": "2025-05-18",
-      "balance": 1001.131,
-      "drawdown_pct": 0.0
+      "balance": 999.947,
+      "drawdown_pct": 0.005
     },
     {
       "date": "2025-05-19",
-      "balance": 1001.131,
-      "drawdown_pct": 0.0
+      "balance": 999.947,
+      "drawdown_pct": 0.005
     },
     {
       "date": "2025-05-20",
-      "balance": 1001.131,
-      "drawdown_pct": 0.0
+      "balance": 999.947,
+      "drawdown_pct": 0.005
     },
     {
       "date": "2025-05-21",
-      "balance": 1004.215,
+      "balance": 1001.314,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-05-22",
-      "balance": 1004.215,
+      "balance": 1001.314,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-05-23",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-05-24",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-05-25",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-05-26",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-05-27",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-05-28",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-05-29",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-05-30",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-05-31",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-06-01",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-06-02",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-06-03",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-06-04",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-06-05",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-06-06",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-06-07",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-06-08",
-      "balance": 1006.149,
+      "balance": 1003.248,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-06-09",
-      "balance": 1005.024,
-      "drawdown_pct": 0.112
+      "balance": 1001.744,
+      "drawdown_pct": 0.15
     },
     {
       "date": "2025-06-10",
-      "balance": 1005.024,
-      "drawdown_pct": 0.112
+      "balance": 1001.744,
+      "drawdown_pct": 0.15
     },
     {
       "date": "2025-06-11",
-      "balance": 1005.024,
-      "drawdown_pct": 0.112
+      "balance": 1001.744,
+      "drawdown_pct": 0.15
     },
     {
       "date": "2025-06-12",
-      "balance": 1005.024,
-      "drawdown_pct": 0.112
+      "balance": 1001.744,
+      "drawdown_pct": 0.15
     },
     {
       "date": "2025-06-13",
-      "balance": 1005.024,
-      "drawdown_pct": 0.112
+      "balance": 1001.744,
+      "drawdown_pct": 0.15
     },
     {
       "date": "2025-06-14",
-      "balance": 1005.024,
-      "drawdown_pct": 0.112
+      "balance": 1001.744,
+      "drawdown_pct": 0.15
     },
     {
       "date": "2025-06-15",
-      "balance": 1006.959,
+      "balance": 1003.679,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-06-16",
-      "balance": 1006.15,
-      "drawdown_pct": 0.08
+      "balance": 1004.994,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-06-17",
-      "balance": 1005.56,
-      "drawdown_pct": 0.139
+      "balance": 1004.502,
+      "drawdown_pct": 0.049
     },
     {
       "date": "2025-06-18",
-      "balance": 1005.56,
-      "drawdown_pct": 0.139
+      "balance": 1004.502,
+      "drawdown_pct": 0.049
     },
     {
       "date": "2025-06-19",
-      "balance": 1005.56,
-      "drawdown_pct": 0.139
+      "balance": 1004.502,
+      "drawdown_pct": 0.049
     },
     {
       "date": "2025-06-20",
-      "balance": 1004.557,
-      "drawdown_pct": 0.239
+      "balance": 1003.233,
+      "drawdown_pct": 0.175
     },
     {
       "date": "2025-06-21",
-      "balance": 1004.557,
-      "drawdown_pct": 0.239
+      "balance": 1003.233,
+      "drawdown_pct": 0.175
     },
     {
       "date": "2025-06-22",
-      "balance": 1004.557,
-      "drawdown_pct": 0.239
+      "balance": 1003.233,
+      "drawdown_pct": 0.175
     },
     {
       "date": "2025-06-23",
-      "balance": 1004.557,
-      "drawdown_pct": 0.239
+      "balance": 1003.233,
+      "drawdown_pct": 0.175
     },
     {
       "date": "2025-06-24",
-      "balance": 1004.557,
-      "drawdown_pct": 0.239
+      "balance": 1003.233,
+      "drawdown_pct": 0.175
     },
     {
       "date": "2025-06-25",
-      "balance": 1004.557,
-      "drawdown_pct": 0.239
+      "balance": 1003.233,
+      "drawdown_pct": 0.175
     },
     {
       "date": "2025-06-26",
-      "balance": 1004.557,
-      "drawdown_pct": 0.239
+      "balance": 1003.233,
+      "drawdown_pct": 0.175
     },
     {
       "date": "2025-06-27",
-      "balance": 1004.557,
-      "drawdown_pct": 0.239
+      "balance": 1003.233,
+      "drawdown_pct": 0.175
     },
     {
       "date": "2025-06-28",
-      "balance": 1004.557,
-      "drawdown_pct": 0.239
+      "balance": 1003.233,
+      "drawdown_pct": 0.175
     },
     {
       "date": "2025-06-29",
-      "balance": 1005.178,
-      "drawdown_pct": 0.177
+      "balance": 1003.473,
+      "drawdown_pct": 0.151
     },
     {
       "date": "2025-06-30",
-      "balance": 1005.77,
-      "drawdown_pct": 0.118
+      "balance": 1003.473,
+      "drawdown_pct": 0.151
     },
     {
       "date": "2025-07-01",
-      "balance": 1005.77,
-      "drawdown_pct": 0.118
+      "balance": 1003.473,
+      "drawdown_pct": 0.151
     },
     {
       "date": "2025-07-02",
-      "balance": 1005.77,
-      "drawdown_pct": 0.118
+      "balance": 1003.473,
+      "drawdown_pct": 0.151
     },
     {
       "date": "2025-07-03",
-      "balance": 1005.77,
-      "drawdown_pct": 0.118
+      "balance": 1003.473,
+      "drawdown_pct": 0.151
     },
     {
       "date": "2025-07-04",
-      "balance": 1005.77,
-      "drawdown_pct": 0.118
+      "balance": 1003.473,
+      "drawdown_pct": 0.151
     },
     {
       "date": "2025-07-05",
-      "balance": 1005.77,
-      "drawdown_pct": 0.118
+      "balance": 1003.473,
+      "drawdown_pct": 0.151
     },
     {
       "date": "2025-07-06",
-      "balance": 1005.77,
-      "drawdown_pct": 0.118
+      "balance": 1004.007,
+      "drawdown_pct": 0.098
     },
     {
       "date": "2025-07-07",
-      "balance": 1005.77,
-      "drawdown_pct": 0.118
+      "balance": 1004.007,
+      "drawdown_pct": 0.098
     },
     {
       "date": "2025-07-08",
-      "balance": 1005.902,
-      "drawdown_pct": 0.105
+      "balance": 1005.128,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-09",
-      "balance": 1005.902,
-      "drawdown_pct": 0.105
+      "balance": 1005.128,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-10",
-      "balance": 1005.902,
-      "drawdown_pct": 0.105
+      "balance": 1005.128,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-11",
-      "balance": 1005.902,
-      "drawdown_pct": 0.105
+      "balance": 1005.128,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-12",
-      "balance": 1005.902,
-      "drawdown_pct": 0.105
+      "balance": 1005.128,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-13",
-      "balance": 1005.902,
-      "drawdown_pct": 0.105
+      "balance": 1005.128,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-14",
-      "balance": 1005.902,
-      "drawdown_pct": 0.105
+      "balance": 1005.128,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-15",
-      "balance": 1005.902,
-      "drawdown_pct": 0.105
+      "balance": 1005.128,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-16",
-      "balance": 1005.902,
-      "drawdown_pct": 0.105
+      "balance": 1005.128,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-17",
-      "balance": 1007.722,
+      "balance": 1006.948,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-18",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-19",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-20",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-21",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-22",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-23",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-24",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-25",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-26",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-27",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-28",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-29",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-30",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-07-31",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-08-01",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-08-02",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-08-03",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-08-04",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-08-05",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-08-06",
-      "balance": 1007.4,
-      "drawdown_pct": 0.032
+      "balance": 1007.95,
+      "drawdown_pct": 0.0
     },
     {
       "date": "2025-08-07",
-      "balance": 1009.206,
+      "balance": 1009.756,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-08-08",
-      "balance": 1009.206,
+      "balance": 1009.756,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-08-09",
-      "balance": 1009.206,
+      "balance": 1009.756,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-08-10",
-      "balance": 1009.206,
+      "balance": 1009.756,
       "drawdown_pct": 0.0
     },
     {
       "date": "2025-08-11",
-      "balance": 1007.821,
-      "drawdown_pct": 0.137
+      "balance": 1008.465,
+      "drawdown_pct": 0.128
     },
     {
       "date": "2025-08-12",
-      "balance": 1007.821,
-      "drawdown_pct": 0.137
+      "balance": 1008.465,
+      "drawdown_pct": 0.128
     },
     {
       "date": "2025-08-13",
-      "balance": 1009.688,
+      "balance": 1010.332,
       "drawdown_pct": 0.0
     }
   ],
   "trades": [
     {
       "pair": "SOL/USDT",
-      "profit_ratio": -0.0212,
-      "profit_abs": -2.123,
-      "open_date": "2025-05-18 18:15:00+00:00",
+      "profit_ratio": -0.02522,
+      "profit_abs": -2.526,
+      "open_date": "2025-05-18 18:00:00+00:00",
       "close_date": "2025-05-18 19:30:00+00:00",
       "exit_reason": "trailing_stop_loss"
     },
     {
       "pair": "BTC/USDT",
-      "profit_ratio": -0.00989,
-      "profit_abs": -0.99,
+      "profit_ratio": -0.01276,
+      "profit_abs": -1.278,
       "open_date": "2025-05-18 18:15:00+00:00",
       "close_date": "2025-05-18 20:00:00+00:00",
       "exit_reason": "trailing_stop_loss"
+    },
+    {
+      "pair": "BTC/USDT",
+      "profit_ratio": 0.01894,
+      "profit_abs": 1.897,
+      "open_date": "2025-05-18 20:15:00+00:00",
+      "close_date": "2025-05-18 23:00:00+00:00",
+      "exit_reason": "exit_signal"
     },
     {
       "pair": "SOL/USDT",
@@ -538,19 +548,11 @@
     },
     {
       "pair": "BTC/USDT",
-      "profit_ratio": 0.02386,
-      "profit_abs": 2.39,
-      "open_date": "2025-05-18 20:15:00+00:00",
-      "close_date": "2025-05-18 23:45:00+00:00",
-      "exit_reason": "trailing_stop_loss"
-    },
-    {
-      "pair": "BTC/USDT",
-      "profit_ratio": 0.03079,
-      "profit_abs": 3.084,
+      "profit_ratio": 0.01364,
+      "profit_abs": 1.366,
       "open_date": "2025-05-21 17:30:00+00:00",
-      "close_date": "2025-05-21 23:15:00+00:00",
-      "exit_reason": "trailing_stop_loss"
+      "close_date": "2025-05-21 23:00:00+00:00",
+      "exit_reason": "roi"
     },
     {
       "pair": "SOL/USDT",
@@ -562,10 +564,10 @@
     },
     {
       "pair": "SOL/USDT",
-      "profit_ratio": -0.01123,
-      "profit_abs": -1.125,
-      "open_date": "2025-06-08 23:45:00+00:00",
-      "close_date": "2025-06-09 03:15:00+00:00",
+      "profit_ratio": -0.01502,
+      "profit_abs": -1.504,
+      "open_date": "2025-06-08 23:15:00+00:00",
+      "close_date": "2025-06-09 04:45:00+00:00",
       "exit_reason": "trailing_stop_loss"
     },
     {
@@ -577,52 +579,68 @@
       "exit_reason": "trailing_stop_loss"
     },
     {
+      "pair": "ETH/USDT",
+      "profit_ratio": 0.01312,
+      "profit_abs": 1.314,
+      "open_date": "2025-06-16 11:30:00+00:00",
+      "close_date": "2025-06-16 14:00:00+00:00",
+      "exit_reason": "exit_signal"
+    },
+    {
       "pair": "BTC/USDT",
-      "profit_ratio": -0.00808,
-      "profit_abs": -0.809,
+      "profit_ratio": -0.01066,
+      "profit_abs": -1.067,
       "open_date": "2025-06-16 22:45:00+00:00",
-      "close_date": "2025-06-16 23:45:00+00:00",
+      "close_date": "2025-06-17 00:00:00+00:00",
       "exit_reason": "trailing_stop_loss"
     },
     {
       "pair": "BTC/USDT",
-      "profit_ratio": -0.00589,
-      "profit_abs": -0.59,
-      "open_date": "2025-06-17 00:00:00+00:00",
-      "close_date": "2025-06-17 07:15:00+00:00",
-      "exit_reason": "trailing_stop_loss"
-    },
-    {
-      "pair": "BTC/USDT",
-      "profit_ratio": -0.01002,
-      "profit_abs": -1.004,
-      "open_date": "2025-06-20 15:15:00+00:00",
-      "close_date": "2025-06-20 17:00:00+00:00",
-      "exit_reason": "trailing_stop_loss"
-    },
-    {
-      "pair": "SOL/USDT",
-      "profit_ratio": 0.00621,
-      "profit_abs": 0.621,
-      "open_date": "2025-06-29 02:30:00+00:00",
-      "close_date": "2025-06-29 10:45:00+00:00",
-      "exit_reason": "trailing_stop_loss"
-    },
-    {
-      "pair": "BTC/USDT",
-      "profit_ratio": 0.00591,
-      "profit_abs": 0.592,
-      "open_date": "2025-06-29 17:15:00+00:00",
-      "close_date": "2025-06-30 02:30:00+00:00",
+      "profit_ratio": 0.00575,
+      "profit_abs": 0.576,
+      "open_date": "2025-06-17 00:15:00+00:00",
+      "close_date": "2025-06-17 05:45:00+00:00",
       "exit_reason": "roi"
     },
     {
-      "pair": "SOL/USDT",
-      "profit_ratio": 0.00132,
-      "profit_abs": 0.132,
-      "open_date": "2025-07-08 15:45:00+00:00",
-      "close_date": "2025-07-08 20:15:00+00:00",
+      "pair": "BTC/USDT",
+      "profit_ratio": -0.01267,
+      "profit_abs": -1.269,
+      "open_date": "2025-06-20 15:15:00+00:00",
+      "close_date": "2025-06-20 17:15:00+00:00",
       "exit_reason": "trailing_stop_loss"
+    },
+    {
+      "pair": "SOL/USDT",
+      "profit_ratio": 0.0,
+      "profit_abs": 0.0,
+      "open_date": "2025-06-29 02:15:00+00:00",
+      "close_date": "2025-06-29 07:45:00+00:00",
+      "exit_reason": "roi"
+    },
+    {
+      "pair": "BTC/USDT",
+      "profit_ratio": 0.00239,
+      "profit_abs": 0.24,
+      "open_date": "2025-06-29 17:15:00+00:00",
+      "close_date": "2025-06-29 22:45:00+00:00",
+      "exit_reason": "exit_signal"
+    },
+    {
+      "pair": "BTC/USDT",
+      "profit_ratio": 0.00533,
+      "profit_abs": 0.534,
+      "open_date": "2025-07-06 18:45:00+00:00",
+      "close_date": "2025-07-06 21:30:00+00:00",
+      "exit_reason": "exit_signal"
+    },
+    {
+      "pair": "SOL/USDT",
+      "profit_ratio": 0.01119,
+      "profit_abs": 1.121,
+      "open_date": "2025-07-08 15:30:00+00:00",
+      "close_date": "2025-07-08 18:45:00+00:00",
+      "exit_reason": "exit_signal"
     },
     {
       "pair": "SOL/USDT",
@@ -634,11 +652,11 @@
     },
     {
       "pair": "SOL/USDT",
-      "profit_ratio": -0.00322,
-      "profit_abs": -0.322,
+      "profit_ratio": 0.01,
+      "profit_abs": 1.002,
       "open_date": "2025-07-18 08:45:00+00:00",
       "close_date": "2025-07-18 14:15:00+00:00",
-      "exit_reason": "trailing_stop_loss"
+      "exit_reason": "roi"
     },
     {
       "pair": "SOL/USDT",
@@ -650,18 +668,10 @@
     },
     {
       "pair": "BTC/USDT",
-      "profit_ratio": -0.01084,
-      "profit_abs": -1.085,
+      "profit_ratio": -0.01289,
+      "profit_abs": -1.291,
       "open_date": "2025-08-11 11:45:00+00:00",
-      "close_date": "2025-08-11 12:30:00+00:00",
-      "exit_reason": "trailing_stop_loss"
-    },
-    {
-      "pair": "BTC/USDT",
-      "profit_ratio": -0.003,
-      "profit_abs": -0.3,
-      "open_date": "2025-08-11 12:45:00+00:00",
-      "close_date": "2025-08-11 17:45:00+00:00",
+      "close_date": "2025-08-11 13:00:00+00:00",
       "exit_reason": "trailing_stop_loss"
     },
     {
@@ -679,65 +689,65 @@
     "type": "win"
   },
   "profit_split": {
-    "gross_profit_abs": 18.037,
-    "gross_loss_abs": 8.349,
-    "avg_win_abs": 1.64,
-    "avg_loss_abs": -0.928
+    "gross_profit_abs": 19.267,
+    "gross_loss_abs": 8.935,
+    "avg_win_abs": 1.284,
+    "avg_loss_abs": -1.489
   },
   "win_loss_sizes": {
     "buckets": [
       {
-        "range_low": -2.12,
-        "range_high": -1.6,
+        "range_low": -2.52,
+        "range_high": -2.08,
         "count": 1
       },
       {
-        "range_low": -1.6,
-        "range_high": -1.08,
-        "count": 2
-      },
-      {
-        "range_low": -1.08,
-        "range_high": -0.56,
-        "count": 4
-      },
-      {
-        "range_low": -0.56,
-        "range_high": -0.04,
-        "count": 2
-      },
-      {
-        "range_low": -0.04,
-        "range_high": 0.48,
-        "count": 1
-      },
-      {
-        "range_low": 0.48,
-        "range_high": 1.0,
-        "count": 2
-      },
-      {
-        "range_low": 1.0,
-        "range_high": 1.52,
+        "range_low": -2.08,
+        "range_high": -1.63,
         "count": 0
       },
       {
-        "range_low": 1.52,
-        "range_high": 2.04,
-        "count": 6
+        "range_low": -1.63,
+        "range_high": -1.19,
+        "count": 4
       },
       {
-        "range_low": 2.04,
-        "range_high": 2.56,
+        "range_low": -1.19,
+        "range_high": -0.74,
         "count": 1
       },
       {
-        "range_low": 2.56,
-        "range_high": 3.08,
+        "range_low": -0.74,
+        "range_high": -0.29,
+        "count": 0
+      },
+      {
+        "range_low": -0.29,
+        "range_high": 0.15,
         "count": 1
+      },
+      {
+        "range_low": 0.15,
+        "range_high": 0.6,
+        "count": 3
+      },
+      {
+        "range_low": 0.6,
+        "range_high": 1.04,
+        "count": 1
+      },
+      {
+        "range_low": 1.04,
+        "range_high": 1.49,
+        "count": 3
+      },
+      {
+        "range_low": 1.49,
+        "range_high": 1.93,
+        "count": 7
       }
     ],
-    "bucket_size": 0.52
+    "bucket_size": 0.445
   },
   "winrate_trend": [
     {
@@ -774,52 +784,76 @@
     },
     {
       "index": 9,
-      "winrate_pct": 55.6
+      "winrate_pct": 66.7
     },
     {
       "index": 10,
-      "winrate_pct": 50.0
+      "winrate_pct": 60.0
     },
     {
       "index": 11,
-      "winrate_pct": 50.0
+      "winrate_pct": 70.0
     },
     {
       "index": 12,
-      "winrate_pct": 60.0
+      "winrate_pct": 70.0
     },
     {
       "index": 13,
-      "winrate_pct": 60.0
+      "winrate_pct": 70.0
     },
     {
       "index": 14,
-      "winrate_pct": 60.0
+      "winrate_pct": 70.0
     },
     {
       "index": 15,
-      "winrate_pct": 60.0
+      "winrate_pct": 70.0
     },
     {
       "index": 16,
-      "winrate_pct": 50.0
+      "winrate_pct": 70.0
     },
     {
       "index": 17,
-      "winrate_pct": 60.0
+      "winrate_pct": 80.0
     },
     {
       "index": 18,
-      "winrate_pct": 50.0
+      "winrate_pct": 80.0
     },
     {
       "index": 19,
-      "winrate_pct": 50.0
+      "winrate_pct": 80.0
     },
     {
       "index": 20,
-      "winrate_pct": 60.0
+      "winrate_pct": 80.0
+    },
+    {
+      "index": 21,
+      "winrate_pct": 80.0
     }
   ],
-  "hyperopt": null
+  "hyperopt": {
+    "epochs": "500",
+    "loss_function": "ProfitFactorHyperOptLoss",
+    "run_at": "2026-08-20T17:04:19.147981+00:00",
+    "params": {
+      "buy_adx": 34,
+      "buy_ema_long": 247,
+      "buy_rsi": 42,
+      "sell_rsi": 66,
+      "stop_atr_mult": 3.9
+    },
+    "stoploss": -0.13,
+    "minimal_roi": {
+      "0": 0.246,
+      "40": 0.076,
+      "108": 0.043,
+      "330": 0
+    },
+    "trailing_stop_positive": 0.155,
+    "trailing_stop_positive_offset": 0.17
+  }
 }

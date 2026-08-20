@@ -1,0 +1,6 @@
+{
+  "epochs": "500",
+  "loss_function": "ProfitFactorHyperOptLoss",
+  "spaces": "buy sell roi stoploss trailing",
+  "run_at": "2026-08-20T17:04:19.147981+00:00"
+}
