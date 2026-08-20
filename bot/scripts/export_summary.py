@@ -224,25 +224,34 @@ def _winrate_trend(trades: list[dict], window: int = 10) -> list[dict]:
 def _hyperopt_info() -> dict | None:
     """
     Reads the strategy params hyperopt.yml commits (FredbV2Strategy.json,
-    freqtrade's --print-json output: a flat "params" dict covering both
-    buy/sell-space values, plus minimal_roi/stoploss/trailing at the top
-    level) and the marker file hyperopt.yml writes alongside it recording
-    which run produced them. Returns None if no hyperopt run has ever
-    landed on this branch yet.
+    written by freqtrade itself after a hyperopt run) and the marker file
+    hyperopt.yml writes alongside it recording which run produced them.
+    Returns None if no hyperopt run has ever landed on this branch yet.
+
+    FredbV2Strategy.json's actual on-disk shape (ft_stratparam_v: 1) is
+    nested by space - params.buy / params.sell / params.roi /
+    params.stoploss.stoploss / params.trailing.* - not the flat dict the
+    `freqtrade hyperopt-show --print-json` *stdout* format uses; those are
+    two different serializations of the same result, and this reads the
+    real file, not the print-json shape.
     """
     if not STRATEGY_PARAMS_PATH.exists() or not HYPEROPT_MARKER_PATH.exists():
         return None
-    params = json.loads(STRATEGY_PARAMS_PATH.read_text())
+    raw = json.loads(STRATEGY_PARAMS_PATH.read_text())
     marker = json.loads(HYPEROPT_MARKER_PATH.read_text())
+    spaces = raw.get("params", {})
+    buy = spaces.get("buy", {})
+    sell = spaces.get("sell", {})
+    trailing = spaces.get("trailing", {})
     return {
         "epochs": marker.get("epochs"),
         "loss_function": marker.get("loss_function"),
         "run_at": marker.get("run_at"),
-        "params": params.get("params", {}),
-        "stoploss": params.get("stoploss"),
-        "minimal_roi": params.get("minimal_roi"),
-        "trailing_stop_positive": params.get("trailing_stop_positive"),
-        "trailing_stop_positive_offset": params.get("trailing_stop_positive_offset"),
+        "params": {**buy, **sell},
+        "stoploss": spaces.get("stoploss", {}).get("stoploss"),
+        "minimal_roi": spaces.get("roi"),
+        "trailing_stop_positive": trailing.get("trailing_stop_positive"),
+        "trailing_stop_positive_offset": trailing.get("trailing_stop_positive_offset"),
     }
 
 
