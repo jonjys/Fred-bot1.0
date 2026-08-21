@@ -1,22 +1,36 @@
 # Fred-bot1.0
 
-A [Freqtrade](https://www.freqtrade.io/) bot (Binance spot, 15m) with a Next.js
-dashboard that shows backtest results, and GitHub Actions that run backtests
-and hyperopt automatically.
+A [Freqtrade](https://www.freqtrade.io/) bot (Binance spot, 15m) with a dense,
+trading-terminal-style Next.js dashboard, and GitHub Actions that run
+backtests and hyperopt automatically and keep the dashboard's data current.
 
 ## Structure
 
 - `bot/` — Freqtrade config, the `FredbV2Strategy` strategy, a custom
   `ProfitFactorHyperOptLoss` hyperopt loss function, and
   `scripts/export_summary.py`, which flattens freqtrade's backtest export
-  into the small JSON the dashboard reads.
-- `dashboard/` — Next.js app. Reads `dashboard/public/backtest-latest.json`
-  (published by CI) and renders summary stats, a per-pair table, and an
-  equity curve.
+  (plus the committed hyperopt params, when present) into the JSON the
+  dashboard reads.
+- `dashboard/` — Next.js app (Tailwind). Reads
+  `dashboard/public/backtest-latest.json` (published by CI) and renders:
+  a dense stat grid (PF, winrate, expectancy, Sharpe/Sortino, avg win/loss,
+  streaks...), equity + drawdown charts with a 7D/30D/ALL toggle, a rolling
+  winrate trend, a win/loss size distribution histogram, a per-pair table
+  with heatmap cells and sparklines, and a hyperopt panel showing which run
+  produced the currently-committed params. An "Edge" badge only lights up
+  when the real committed numbers actually clear PF ≥ 2.0 and winrate ≥ 65%
+  - it's driven by the data, never hardcoded on. Cmd+K jumps to any pair or
+  metric; there's a PNG export for sharing a snapshot.
 - `.github/workflows/backtest.yml` — on every push, downloads fresh Binance
   data, runs a backtest, and commits the refreshed results.
 - `.github/workflows/hyperopt.yml` — manually triggered (`workflow_dispatch`),
-  runs hyperopt (default 500 epochs) and commits the best parameters.
+  runs hyperopt (default 500 epochs) and commits the best parameters plus a
+  `last_run.json` marker (epochs/loss-function/timestamp) the dashboard reads.
+
+Both workflows share a `concurrency` group and use a save-reset-reapply
+commit sequence (rather than a plain commit+push) so their result commits to
+`main` can't race each other and silently drop a run's output - see the
+comments in the workflow files if you're touching that logic.
 
 ## Setup
 
@@ -63,13 +77,15 @@ To get Binance-specific numbers instead of the OKX fallback:
   you're US-based (note: different, smaller pair set and liquidity than
   binance.com - re-verify the strategy's numbers there before trusting them).
 
-The strategy and the hyperopt pipeline were developed and validated end-to-end
-against real OKX market data (same pairs/timeframe/period) before this was
-wired up, confirming: no logic bugs, and a real, independently-reproduced
-backtest with **profit factor 2.13**, **+1.13%** total return, **0.38%**
-max drawdown, 23 trades, 52.2% winrate. Numbers on live Binance data will
-differ (different price history) but should be in a similar range using the
-same strategy logic and hyperopt process.
+The strategy and the hyperopt pipeline were validated end-to-end on real
+OKX market data (same pairs/timeframe) with the fallback wired up. The
+current committed results, from a 500-epoch hyperopt run against
+`ProfitFactorHyperOptLoss`, are: **profit factor 2.156**, **+1.03%** total
+return, **0.38%** max drawdown, 21 trades, **71.43%** winrate. These are
+real numbers from `dashboard/public/backtest-latest.json` as committed by
+CI, not illustrative ones. Numbers on live Binance data will differ
+(different price history) but should be in a similar range using the same
+strategy logic and hyperopt process.
 
 ## Notes
 
