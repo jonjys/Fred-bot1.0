@@ -1,0 +1,61 @@
+name: Walk Forward + Lookahead Guard
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "bot/user_data/strategies/**"
+      - "bot/user_data/PROD_LOCK_V1.json"
+      - ".github/workflows/walk_forward.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  oos-and-lookahead:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install TA-Lib and dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y build-essential wget
+          wget -q https://github.com/ta-lib/ta-lib/releases/download/v0.6.4/ta-lib-0.6.4-src.tar.gz
+          tar -xzf ta-lib-0.6.4-src.tar.gz && cd ta-lib-0.6.4
+          ./configure --prefix=/usr && make -j"$(nproc)" && sudo make install
+          pip install -r bot/requirements.txt
+      - name: Download 90-day validation dataset
+        id: data
+        working-directory: bot
+        run: |
+          if freqtrade download-data --userdir user_data --exchange binance --pairs BTC/USDT ETH/USDT SOL/USDT --timeframes 15m --timerange 20250518-20250816; then
+            echo "config=-c user_data/config.json" >> "$GITHUB_OUTPUT"
+          else
+            freqtrade download-data --userdir user_data --exchange okx --pairs BTC/USDT ETH/USDT SOL/USDT --timeframes 15m --timerange 20250518-20250816
+            echo "config=-c user_data/config.json -c user_data/config-okx-fallback.json" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Three rolling 30-day OOS windows
+        working-directory: bot
+        run: |
+          windows=(20250518-20250617 20250617-20250717 20250717-20250816)
+          i=0
+          for window in "${windows[@]}"; do
+            i=$((i+1))
+            freqtrade backtesting ${{ steps.data.outputs.config }} --userdir user_data --strategy FredbV2ProdStrategy --timerange "$window" --export trades --export-filename "oos-$i.zip"
+            python3 scripts/extract_backtest_metrics.py "oos-$i.zip" "oos-$i.json"
+          done
+          python3 scripts/validate_walk_forward.py oos-1.json oos-2.json oos-3.json
+      - name: Lookahead-bias analysis
+        working-directory: bot
+        run: |
+          freqtrade lookahead-analysis ${{ steps.data.outputs.config }} --userdir user_data --strategy FredbV2ProdStrategy --timerange 20250518-20250816 --minimum-trade-amount 10
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: walk-forward-report
+          path: |
+            bot/oos-*.json
+            bot/walk-forward-report.json

@@ -8,12 +8,13 @@ import ExportPngButton from "./components/ExportPngButton";
 import FallbackBanner from "./components/FallbackBanner";
 import HyperoptPanel from "./components/HyperoptPanel";
 import LiveBadge from "./components/LiveBadge";
+import OperationsPanel from "./components/OperationsPanel";
 import PerPairPanel from "./components/PerPairPanel";
 import RunBacktestButton from "./components/RunBacktestButton";
 import StatCard from "./components/StatCard";
 import StreakBadge from "./components/StreakBadge";
 import WinrateTrendChart from "./components/WinrateTrendChart";
-import { getSummary } from "./lib/getSummary";
+import { getLiveStatus, getSummary } from "./lib/getSummary";
 
 // Re-read backtest-latest.json on every request instead of baking it into
 // the static build, so "Run Backtest" (and a fresh CI-published file) show
@@ -22,6 +23,7 @@ export const dynamic = "force-dynamic";
 
 export default function Home() {
   const summary = getSummary();
+  const live = getLiveStatus();
 
   const paletteItems: PaletteItem[] = summary
     ? [
@@ -51,7 +53,7 @@ export default function Home() {
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="text-lg font-bold lg:text-xl">Fred Bot Dashboard</h1>
-            {summary && <LiveBadge />}
+            {summary && live.connected && <LiveBadge />}
             {summary && (
               <EdgeBadge profitFactor={summary.profit_factor} winratePct={summary.winrate_pct} />
             )}
@@ -85,6 +87,7 @@ export default function Home() {
 
       {summary && (
         <div className="space-y-2.5">
+          <OperationsPanel live={live} backtest={summary} />
           <HyperoptPanel
             hyperopt={summary.hyperopt}
             strategyVersion={summary.strategy_version}

@@ -59,6 +59,7 @@ export interface HyperoptInfo {
   minimal_roi: Record<string, number> | null;
   trailing_stop_positive: number | null;
   trailing_stop_positive_offset: number | null;
+  prod_lock?: string | null;
 }
 
 export interface BacktestSummary {
@@ -93,4 +94,19 @@ export interface BacktestSummary {
   win_loss_sizes: WinLossSizes;
   winrate_trend: WinrateTrendPoint[];
   hyperopt: HyperoptInfo | null;
+}
+
+export interface LiveStatus {
+  connected: boolean;
+  mode: "dry_run" | "live" | "offline";
+  updated_at: string | null;
+  equity: number | null;
+  pnl_pct: number | null;
+  profit_factor: number | null;
+  winrate_pct: number | null;
+  max_drawdown_pct: number | null;
+  sharpe: number | null;
+  open_trades: number;
+  circuit_breaker: boolean;
+  alerting: "telegram" | "discord" | "none";
 }

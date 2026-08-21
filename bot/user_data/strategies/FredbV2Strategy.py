@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 
 import talib.abstract as ta
 from pandas import DataFrame
@@ -41,6 +42,29 @@ class FredbV2Strategy(IStrategy):
     use_exit_signal = True
     exit_profit_only = False
     can_short = False
+    position_adjustment_enable = False
+
+    # PROD LOCK v1 risk envelope. Freqtrade protections are evaluated by the
+    # engine and survive strategy restarts, unlike ad-hoc in-memory timers.
+    @property
+    def protections(self):
+        return [
+            {"method": "CooldownPeriod", "stop_duration_candles": 2},
+            {
+                "method": "StoplossGuard",
+                "lookback_period_candles": 96,
+                "trade_limit": 2,
+                "stop_duration_candles": 16,
+                "only_per_pair": False,
+            },
+            {
+                "method": "MaxDrawdown",
+                "lookback_period_candles": 192,
+                "trade_limit": 12,
+                "stop_duration_candles": 32,
+                "max_allowed_drawdown": 0.08,
+            },
+        ]
 
     minimal_roi = {"0": 0.231, "81": 0.125, "183": 0.045, "519": 0}
     stoploss = -0.246  # hard safety net; real exits happen via custom_stoploss
@@ -50,6 +74,15 @@ class FredbV2Strategy(IStrategy):
     trailing_stop_positive = 0.32
     trailing_stop_positive_offset = 0.381
     trailing_only_offset_is_reached = False
+
+    LIVE_PF_FLOOR = 1.30
+    LIVE_PF_MIN_TRADES = 20
+    RISK_PER_TRADE = 0.0075
+    MAX_STAKE_EQUITY_PCT = 0.20
+    EQUITY_DRAWDOWN_THROTTLE = 0.05
+    _live_circuit_open = False
+    _circuit_reason = ""
+    logger = logging.getLogger(__name__)
 
     # --- Hyperopt spaces -------------------------------------------------
     buy_rsi = IntParameter(25, 45, default=40, space="buy", optimize=True)
@@ -132,10 +165,62 @@ class FredbV2Strategy(IStrategy):
 
         atr_stop_pct = -(self.stop_atr_mult.value * atr) / trade.open_rate
 
-        # Never risk more than the hard safety-net stoploss, and once in
-        # profit, don't let the stop go looser than break-even.
+        # Never risk more than the hard safety-net stoploss. Lock progressively
+        # more profit as the trade moves in our favour; this is deterministic
+        # and uses only the latest closed candle (no future information).
         atr_stop_pct = max(atr_stop_pct, self.stoploss)
-        if current_profit > 0.02:
+        if current_profit > 0.06:
+            atr_stop_pct = max(atr_stop_pct, 0.03)
+        elif current_profit > 0.035:
+            atr_stop_pct = max(atr_stop_pct, 0.012)
+        elif current_profit > 0.02:
             atr_stop_pct = max(atr_stop_pct, -0.002)
 
         return atr_stop_pct
+
+    def bot_loop_start(self, current_time: datetime, **kwargs) -> None:
+        """Open a live-entry circuit when realized PF falls below 1.30."""
+        runmode = self.config.get("runmode")
+        if getattr(runmode, "value", runmode) in {"backtest", "hyperopt"}:
+            return
+        closed = list(Trade.get_trades_proxy(is_open=False))[-100:]
+        if len(closed) < self.LIVE_PF_MIN_TRADES:
+            return
+        wins = sum(max(float(t.close_profit_abs or 0), 0) for t in closed)
+        losses = abs(sum(min(float(t.close_profit_abs or 0), 0) for t in closed))
+        live_pf = wins / losses if losses > 0 else float("inf")
+        self._live_circuit_open = live_pf < self.LIVE_PF_FLOOR
+        self._circuit_reason = f"realized PF {live_pf:.2f} < {self.LIVE_PF_FLOOR:.2f}"
+        if self._live_circuit_open:
+            self.logger.error("LIVE CIRCUIT OPEN: %s", self._circuit_reason)
+
+    def confirm_trade_entry(self, pair: str, order_type: str, amount: float,
+                            rate: float, time_in_force: str,
+                            current_time: datetime, entry_tag: str | None,
+                            side: str, **kwargs) -> bool:
+        if self._live_circuit_open:
+            self.logger.error("Entry blocked for %s: %s", pair, self._circuit_reason)
+            return False
+        return True
+
+    def custom_stake_amount(self, pair: str, current_time: datetime,
+                            current_rate: float, proposed_stake: float,
+                            min_stake: float | None, max_stake: float,
+                            leverage: float, entry_tag: str | None, side: str,
+                            **kwargs) -> float:
+        """ATR risk sizing, capped by equity and throttled after drawdown."""
+        dataframe, _ = self.dp.get_analyzed_dataframe(pair, self.timeframe)
+        if dataframe.empty or current_rate <= 0:
+            return min(proposed_stake, max_stake)
+        atr = float(dataframe.iloc[-1].get("atr", 0) or 0)
+        if atr <= 0:
+            return min(proposed_stake, max_stake)
+        equity = float(self.wallets.get_total_stake_amount())
+        risk_distance = max((self.stop_atr_mult.value * atr) / current_rate, 0.005)
+        risk_sized = equity * self.RISK_PER_TRADE / risk_distance
+        equity_cap = equity * self.MAX_STAKE_EQUITY_PCT
+        # Throttle exposure when current equity is 5%+ below starting equity.
+        start = float(self.config.get("dry_run_wallet", equity) or equity)
+        throttle = 0.5 if equity < start * (1 - self.EQUITY_DRAWDOWN_THROTTLE) else 1.0
+        stake = min(risk_sized, equity_cap, max_stake) * throttle
+        return max(stake, min_stake or 0)

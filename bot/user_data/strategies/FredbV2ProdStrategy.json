@@ -1,0 +1,19 @@
+{
+  "strategy_name": "FredbV2ProdStrategy",
+  "prod_lock": "PROD LOCK v1",
+  "params": {
+    "max_open_trades": {"max_open_trades": 3},
+    "buy": {"buy_adx": 34, "buy_ema_long": 247, "buy_rsi": 42},
+    "sell": {"sell_rsi": 66, "stop_atr_mult": 3.9},
+    "roi": {"0": 0.246, "40": 0.076, "108": 0.043, "330": 0},
+    "stoploss": {"stoploss": -0.13},
+    "trailing": {
+      "trailing_stop": true,
+      "trailing_stop_positive": 0.155,
+      "trailing_stop_positive_offset": 0.17,
+      "trailing_only_offset_is_reached": false
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2026-08-20 17:04:17.454179+00:00"
+}

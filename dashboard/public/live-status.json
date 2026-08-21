@@ -1,0 +1,14 @@
+{
+  "connected": false,
+  "mode": "offline",
+  "updated_at": null,
+  "equity": null,
+  "pnl_pct": null,
+  "profit_factor": null,
+  "winrate_pct": null,
+  "max_drawdown_pct": null,
+  "sharpe": null,
+  "open_trades": 0,
+  "circuit_breaker": false,
+  "alerting": "none"
+}

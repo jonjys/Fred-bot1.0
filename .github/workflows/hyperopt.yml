@@ -90,7 +90,7 @@ jobs:
           }, open('user_data/hyperopt_results/last_run.json', 'w'), indent=2)
           "
 
-      - name: Re-run backtest with best params and refresh dashboard data
+      - name: Re-run backtest with best experimental params
         working-directory: bot
         run: |
           freqtrade backtesting \
@@ -99,12 +99,6 @@ jobs:
             --strategy FredbV2Strategy \
             --timerange 20250516-20250816 \
             --export trades
-          python3 scripts/export_summary.py
-
-      - name: Publish summary to dashboard
-        run: |
-          mkdir -p dashboard/public
-          cp bot/user_data/backtest_results/latest.json dashboard/public/backtest-latest.json
 
       # workflow_dispatch pins checkout to the commit SHA at *dispatch* time,
       # not at job-start time - after an 8+ minute hyperopt run, main has
@@ -117,8 +111,6 @@ jobs:
       - name: Commit and push results (rebase onto latest main first)
         run: |
           mkdir -p /tmp/hyperopt-out
-          cp bot/user_data/backtest_results/latest.json /tmp/hyperopt-out/latest.json
-          cp dashboard/public/backtest-latest.json /tmp/hyperopt-out/backtest-latest.json
           cp bot/user_data/strategies/FredbV2Strategy.json /tmp/hyperopt-out/FredbV2Strategy.json
           cp bot/user_data/hyperopt_results/last_run.json /tmp/hyperopt-out/last_run.json
           cp bot/user_data/hyperopt_results/*.fthypt /tmp/hyperopt-out/ 2>/dev/null || true
@@ -126,9 +118,7 @@ jobs:
           git fetch origin "${GITHUB_REF_NAME}"
           git reset --hard "origin/${GITHUB_REF_NAME}"
 
-          mkdir -p bot/user_data/backtest_results dashboard/public bot/user_data/hyperopt_results
-          cp /tmp/hyperopt-out/latest.json bot/user_data/backtest_results/latest.json
-          cp /tmp/hyperopt-out/backtest-latest.json dashboard/public/backtest-latest.json
+          mkdir -p bot/user_data/hyperopt_results
           cp /tmp/hyperopt-out/FredbV2Strategy.json bot/user_data/strategies/FredbV2Strategy.json
           cp /tmp/hyperopt-out/last_run.json bot/user_data/hyperopt_results/last_run.json
           cp /tmp/hyperopt-out/*.fthypt bot/user_data/hyperopt_results/ 2>/dev/null || true
@@ -137,9 +127,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add bot/user_data/strategies/FredbV2Strategy.json \
             bot/user_data/hyperopt_results/last_run.json \
-            bot/user_data/hyperopt_results/*.fthypt \
-            bot/user_data/backtest_results/latest.json \
-            dashboard/public/backtest-latest.json
+            bot/user_data/hyperopt_results/*.fthypt
 
           if git diff --cached --quiet; then
             echo "No changes to commit."

@@ -31,6 +31,11 @@ export default function HyperoptPanel({
         <span className="rounded-full border border-border px-1.5 py-0.5 text-[10px] text-muted">
           {hyperopt.loss_function}
         </span>
+        {hyperopt.prod_lock && (
+          <span className="rounded-full border border-live/40 bg-live/10 px-1.5 py-0.5 text-[10px] font-bold text-live">
+            {hyperopt.prod_lock}
+          </span>
+        )}
         {belowThreshold && (
           <span className="rounded-full border border-warn/50 bg-warn/10 px-1.5 py-0.5 text-[10px] font-bold text-warn">
             ⚠ PF {profitFactor?.toFixed(2)} &lt; 1.5 target

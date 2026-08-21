@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import type { BacktestSummary } from "./types";
+import type { BacktestSummary, LiveStatus } from "./types";
 
 /**
  * The dashboard reads a small, pre-flattened summary from public/, written
@@ -17,6 +17,26 @@ export function getSummary(): BacktestSummary | null {
   }
   const raw = fs.readFileSync(filePath, "utf-8");
   return normalize(JSON.parse(raw));
+}
+
+export function getLiveStatus(): LiveStatus {
+  const filePath = path.join(process.cwd(), "public", "live-status.json");
+  const fallback: LiveStatus = {
+    connected: false,
+    mode: "offline",
+    updated_at: null,
+    equity: null,
+    pnl_pct: null,
+    profit_factor: null,
+    winrate_pct: null,
+    max_drawdown_pct: null,
+    sharpe: null,
+    open_trades: 0,
+    circuit_breaker: false,
+    alerting: "none",
+  };
+  if (!fs.existsSync(filePath)) return fallback;
+  return { ...fallback, ...JSON.parse(fs.readFileSync(filePath, "utf-8")) };
 }
 
 /**

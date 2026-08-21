@@ -1,0 +1,12 @@
+{
+  "lock_id": "PROD LOCK v1",
+  "created_from_run": 4,
+  "baseline": {"profit_factor": 2.156, "oos_profit_factor_floor": 1.5},
+  "promotion": {"minimum_oos_improvement_pct": 10, "require_all_oos_windows": true},
+  "risk": {"live_pf_circuit_breaker": 1.3, "max_open_trades": 3, "risk_per_trade": 0.0075},
+  "params": {
+    "buy_adx": 34,
+    "stoploss": -0.13,
+    "source": "user_data/strategies/FredbV2Strategy.json"
+  }
+}

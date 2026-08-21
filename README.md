@@ -38,6 +38,43 @@ comments in the workflow files if you're touching that logic.
 2. Dashboard: `cd dashboard && npm i && npm run dev`
 3. Vercel: Root directory = `dashboard`
 
+## Production runbook (fail closed)
+
+Production uses `FredbV2ProdStrategy`, whose parameters live in the separate
+`FredbV2ProdStrategy.json` snapshot marked **PROD LOCK v1**. Hyperopt continues
+to write `FredbV2Strategy.json`; it cannot mutate the live snapshot. Candidate
+promotion requires all three 30-day OOS windows to clear PF 1.5 and mean OOS
+PF to improve by more than 10% (`bot/scripts/promote_candidate.py`).
+
+Before any real-money start, configure secrets through Freqtrade's environment
+variables—not JSON—and run the preflight:
+
+```bash
+export FREQTRADE__EXCHANGE__KEY=...
+export FREQTRADE__EXCHANGE__SECRET=...
+export FREQTRADE__DRY_RUN=false
+export LIVE_TRADING_ACK='PROD LOCK v1'
+# Configure one alert route:
+export FREQTRADE__TELEGRAM__TOKEN=...
+export FREQTRADE__TELEGRAM__CHAT_ID=...
+# or FREQTRADE__WEBHOOK__URL=<Discord-compatible webhook bridge>
+bash bot/scripts/start_prod.sh
+```
+
+The preflight refuses live mode without the explicit lock acknowledgement,
+exchange credentials, and Telegram/Discord alerting. The strategy then adds
+ATR/equity position sizing, a three-trade cap, stoploss cooldown/guard,
+drawdown protection, progressive ATR trailing, and a realized-live-PF entry
+circuit breaker at 1.30 (after 20 closed trades).
+
+`walk_forward.yml` runs three fixed, non-overlapping 30-day OOS windows plus
+Freqtrade's lookahead analysis. `deploy_prod.yml` is manual and gated: current
+Backtest, Hyperopt, and Walk Forward runs must all be green; PF must be at
+least 1.5; current Vercel runtime errors must be empty. It deploys the exact
+prebuilt artifact and creates the next immutable `prod-vN` tag.
+Automatic Vercel Git builds are ignored by `dashboard/vercel.json`, preventing
+ordinary pushes and CI result commits from bypassing this release gate.
+
 ## Deploy
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/jonjys/Fred-bot1.0&project-name=fred-bot&root-directory=dashboard)

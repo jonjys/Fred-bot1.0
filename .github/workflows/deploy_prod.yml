@@ -1,0 +1,59 @@
+name: Deploy Production
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  gate-and-deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Production lock and PF gate
+        working-directory: bot
+        run: |
+          python3 scripts/prod_preflight.py
+          python3 scripts/validate_summary.py user_data/backtest_results/latest.json 1.5
+      - name: Require green Backtest, Hyperopt, and Walk Forward workflows
+        run: |
+          for workflow in backtest.yml hyperopt.yml walk_forward.yml; do
+            conclusion=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/${workflow}/runs?branch=main&per_page=1" --jq '.workflow_runs[0].conclusion')
+            test "$conclusion" = "success" || { echo "::error::$workflow latest main run is $conclusion"; exit 1; }
+          done
+      - name: Verify current production has no runtime errors
+        run: |
+          npm install --global vercel@latest
+          test -n "$VERCEL_TOKEN" -a -n "$VERCEL_ORG_ID" -a -n "$VERCEL_PROJECT_ID"
+          vercel logs https://freq-bot1.vercel.app --level error --since 1h --json > runtime-errors.json
+          test ! -s runtime-errors.json || { cat runtime-errors.json; echo "::error::Runtime errors detected"; exit 1; }
+      - name: Build and deploy validated artifact
+        working-directory: dashboard
+        run: |
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          vercel build --prod --token="$VERCEL_TOKEN"
+          vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" > deployment-url.txt
+      - name: Tag immutable production release
+        run: |
+          latest=$(git tag -l 'prod-v*' --sort=-v:refname | head -1 | sed 's/prod-v//' || true)
+          next=$(( ${latest:-0} + 1 ))
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "prod-v${next}" -m "Production release prod-v${next}"
+          git push origin "prod-v${next}"

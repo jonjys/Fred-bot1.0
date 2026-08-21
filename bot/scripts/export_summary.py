@@ -14,7 +14,7 @@ from pathlib import Path
 
 USER_DATA = Path(__file__).resolve().parent.parent / "user_data"
 BACKTEST_DIR = USER_DATA / "backtest_results"
-STRATEGY_PARAMS_PATH = USER_DATA / "strategies" / "FredbV2Strategy.json"
+STRATEGY_PARAMS_PATH = USER_DATA / "strategies" / "FredbV2ProdStrategy.json"
 HYPEROPT_MARKER_PATH = USER_DATA / "hyperopt_results" / "last_run.json"
 
 STRATEGY_VERSION = "FredbV2.1"
@@ -223,9 +223,9 @@ def _winrate_trend(trades: list[dict], window: int = 10) -> list[dict]:
 
 def _hyperopt_info() -> dict | None:
     """
-    Reads the strategy params hyperopt.yml commits (FredbV2Strategy.json,
-    written by freqtrade itself after a hyperopt run) and the marker file
-    hyperopt.yml writes alongside it recording which run produced them.
+    Reads the immutable production parameter snapshot. Hyperopt writes only
+    the experimental FredbV2Strategy.json and cannot change this panel until
+    the explicit OOS promotion gate updates FredbV2ProdStrategy.json.
     Returns None if no hyperopt run has ever landed on this branch yet.
 
     FredbV2Strategy.json's actual on-disk shape (ft_stratparam_v: 1) is
@@ -252,6 +252,7 @@ def _hyperopt_info() -> dict | None:
         "minimal_roi": spaces.get("roi"),
         "trailing_stop_positive": trailing.get("trailing_stop_positive"),
         "trailing_stop_positive_offset": trailing.get("trailing_stop_positive_offset"),
+        "prod_lock": raw.get("prod_lock"),
     }
 
 
