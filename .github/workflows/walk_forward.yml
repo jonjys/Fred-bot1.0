@@ -6,6 +6,8 @@ on:
     branches: [main]
     paths:
       - "bot/user_data/strategies/**"
+      - "bot/user_data/config.json"
+      - "bot/user_data/PROD_CONFIG.json"
       - "bot/user_data/PROD_LOCK_V1.json"
       - ".github/workflows/walk_forward.yml"
 
