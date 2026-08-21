@@ -51,11 +51,7 @@
     "listen_port": 8080,
     "verbosity": "error",
     "enable_openapi": false,
-    "jwt_secret_key": "",
-    "ws_token": "",
-    "CORS_origins": [],
-    "username": "",
-    "password": ""
+    "CORS_origins": []
   },
   "bot_name": "fredb_bot",
   "initial_state": "running",
