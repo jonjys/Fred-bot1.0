@@ -49,7 +49,8 @@ jobs:
           for window in "${windows[@]}"; do
             i=$((i+1))
             freqtrade backtesting ${{ steps.data.outputs.config }} --userdir user_data --strategy FredbV2ProdStrategy --timerange "$window" --export trades --export-filename "oos-$i.zip"
-            python3 scripts/extract_backtest_metrics.py "oos-$i.zip" "oos-$i.json"
+            archive=$(python3 -c "import json; print('user_data/backtest_results/' + json.load(open('user_data/backtest_results/.last_result.json'))['latest_backtest'])")
+            python3 scripts/extract_backtest_metrics.py "$archive" "oos-$i.json"
           done
           python3 scripts/validate_walk_forward.py oos-1.json oos-2.json oos-3.json
       - name: Lookahead-bias analysis
