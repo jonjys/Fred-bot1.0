@@ -31,9 +31,11 @@ export function getLiveStatus(): LiveStatus {
     winrate_pct: null,
     max_drawdown_pct: null,
     sharpe: null,
+    avg_trade_duration_minutes: null,
     open_trades: 0,
     circuit_breaker: false,
     alerting: "none",
+    trades: [],
   };
   if (!fs.existsSync(filePath)) return fallback;
   return { ...fallback, ...JSON.parse(fs.readFileSync(filePath, "utf-8")) };

@@ -8,7 +8,7 @@ on:
       - "bot/user_data/strategies/**"
       - "bot/user_data/config.json"
       - "bot/user_data/PROD_CONFIG.json"
-      - "bot/user_data/PROD_LOCK_V1.json"
+      - "bot/user_data/PROD_LOCK.json"
       - ".github/workflows/walk_forward.yml"
 
 permissions:
@@ -44,15 +44,14 @@ jobs:
       - name: Three rolling 30-day OOS windows
         working-directory: bot
         run: |
-          windows=(20250518-20250617 20250617-20250717 20250717-20250816)
-          i=0
-          for window in "${windows[@]}"; do
-            i=$((i+1))
-            freqtrade backtesting ${{ steps.data.outputs.config }} --userdir user_data --strategy FredbV2ProdStrategy --timerange "$window" --export trades --export-filename "oos-$i.zip"
-            archive=$(python3 -c "import json; print('user_data/backtest_results/' + json.load(open('user_data/backtest_results/.last_result.json'))['latest_backtest'])")
-            python3 scripts/extract_backtest_metrics.py "$archive" "oos-$i.json"
+          config_args=(${{ steps.data.outputs.config }})
+          py_args=()
+          for ((i=0; i<${#config_args[@]}; i++)); do
+            if [[ "${config_args[$i]}" == "-c" ]]; then
+              py_args+=(--config "${config_args[$((i+1))]}")
+            fi
           done
-          python3 scripts/validate_walk_forward.py oos-1.json oos-2.json oos-3.json
+          python3 scripts/walk_forward.py "${py_args[@]}" --output walk-forward-report.json
       - name: Lookahead-bias analysis
         working-directory: bot
         run: |
@@ -62,5 +61,4 @@ jobs:
         with:
           name: walk-forward-report
           path: |
-            bot/oos-*.json
             bot/walk-forward-report.json

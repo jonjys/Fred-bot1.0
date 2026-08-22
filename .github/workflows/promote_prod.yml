@@ -1,0 +1,69 @@
+name: Promote Experimental Params
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prod-promotion
+  cancel-in-progress: false
+
+jobs:
+  prove-and-promote:
+    runs-on: ubuntu-latest
+    env:
+      ALLOW_PROD_PROMOTION: explicit-workflow
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install validation dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y build-essential wget
+          wget -q --retry-connrefused --waitretry=2 --tries=5 https://github.com/ta-lib/ta-lib/releases/download/v0.6.4/ta-lib-0.6.4-src.tar.gz
+          tar -xzf ta-lib-0.6.4-src.tar.gz && cd ta-lib-0.6.4
+          ./configure --prefix=/usr && make -j"$(nproc)" && sudo make install
+          cd .. && pip install -r bot/requirements.txt
+      - name: Download locked validation dataset
+        id: data
+        working-directory: bot
+        run: |
+          if freqtrade download-data --userdir user_data --exchange binance --pairs BTC/USDT ETH/USDT SOL/USDT --timeframes 15m --timerange 20250518-20250816; then
+            echo "config=-c user_data/config.json" >> "$GITHUB_OUTPUT"
+          else
+            freqtrade download-data --userdir user_data --exchange okx --pairs BTC/USDT ETH/USDT SOL/USDT --timeframes 15m --timerange 20250518-20250816
+            echo "config=-c user_data/config.json -c user_data/config-okx-fallback.json" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Prove experimental strategy on three OOS windows
+        working-directory: bot
+        run: |
+          config_args=(${{ steps.data.outputs.config }})
+          py_args=()
+          for ((i=0; i<${#config_args[@]}; i++)); do
+            [[ "${config_args[$i]}" == "-c" ]] && py_args+=(--config "${config_args[$((i+1))]}")
+          done
+          python3 scripts/walk_forward.py "${py_args[@]}" --strategy FredbV2Strategy --output candidate-oos-report.json
+      - name: Reject lookahead bias
+        working-directory: bot
+        run: freqtrade lookahead-analysis ${{ steps.data.outputs.config }} --userdir user_data --strategy FredbV2Strategy --timerange 20250518-20250816 --minimum-trade-amount 10
+      - name: Apply explicit promotion gate
+        working-directory: bot
+        run: |
+          python3 scripts/promote_candidate.py candidate-oos-report.json
+          python3 scripts/prod_preflight.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: promoted-candidate-oos-report
+          path: bot/candidate-oos-report.json
+      - name: Commit immutable lock revision
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bot/user_data/PROD_LOCK.json bot/user_data/strategies/FredbV2ProdStrategy.json
+          git commit -m "chore: explicitly promote validated production params"
+          git push origin HEAD:main

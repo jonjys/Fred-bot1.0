@@ -77,11 +77,13 @@ class FredbV2Strategy(IStrategy):
 
     LIVE_PF_FLOOR = 1.30
     LIVE_PF_MIN_TRADES = 20
-    RISK_PER_TRADE = 0.0075
+    RISK_PER_TRADE = 0.01
     MAX_STAKE_EQUITY_PCT = 0.20
     EQUITY_DRAWDOWN_THROTTLE = 0.05
+    DAILY_LOSS_LIMIT = -0.05
     _live_circuit_open = False
     _circuit_reason = ""
+    _last_circuit_alert = ""
     logger = logging.getLogger(__name__)
 
     # --- Hyperopt spaces -------------------------------------------------
@@ -184,6 +186,21 @@ class FredbV2Strategy(IStrategy):
         if getattr(runmode, "value", runmode) in {"backtest", "hyperopt"}:
             return
         closed = list(Trade.get_trades_proxy(is_open=False))[-100:]
+        today = current_time.date()
+        daily_pnl = sum(
+            float(t.close_profit_abs or 0)
+            for t in closed
+            if t.close_date and t.close_date.date() == today
+        )
+        equity = max(float(self.wallets.get_total_stake_amount()), 1.0)
+        if daily_pnl / equity <= self.DAILY_LOSS_LIMIT:
+            self._live_circuit_open = True
+            self._circuit_reason = f"daily realized loss {daily_pnl / equity:.1%} <= -5.0%"
+            self.logger.critical("DAILY LOSS CIRCUIT OPEN: %s", self._circuit_reason)
+            if self.dp and self._last_circuit_alert != self._circuit_reason:
+                self.dp.send_msg(f"🚨 Fredb DAILY LOSS CIRCUIT OPEN: {self._circuit_reason}")
+                self._last_circuit_alert = self._circuit_reason
+            return
         if len(closed) < self.LIVE_PF_MIN_TRADES:
             return
         wins = sum(max(float(t.close_profit_abs or 0), 0) for t in closed)
@@ -193,6 +210,9 @@ class FredbV2Strategy(IStrategy):
         self._circuit_reason = f"realized PF {live_pf:.2f} < {self.LIVE_PF_FLOOR:.2f}"
         if self._live_circuit_open:
             self.logger.error("LIVE CIRCUIT OPEN: %s", self._circuit_reason)
+            if self.dp and self._last_circuit_alert != self._circuit_reason:
+                self.dp.send_msg(f"🚨 Fredb LIVE PF CIRCUIT OPEN: {self._circuit_reason}")
+                self._last_circuit_alert = self._circuit_reason
 
     def confirm_trade_entry(self, pair: str, order_type: str, amount: float,
                             rate: float, time_in_force: str,

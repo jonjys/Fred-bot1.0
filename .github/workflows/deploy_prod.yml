@@ -2,6 +2,8 @@ name: Deploy Production
 
 on:
   workflow_dispatch:
+  push:
+    tags: ["prod-v*"]
 
 permissions:
   contents: write
@@ -19,6 +21,8 @@ jobs:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -50,6 +54,7 @@ jobs:
           vercel build --prod --token="$VERCEL_TOKEN"
           vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" > deployment-url.txt
       - name: Tag immutable production release
+        if: github.event_name == 'workflow_dispatch'
         run: |
           latest=$(git tag -l 'prod-v*' --sort=-v:refname | head -1 | sed 's/prod-v//' || true)
           next=$(( ${latest:-0} + 1 ))
@@ -57,3 +62,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git tag -a "prod-v${next}" -m "Production release prod-v${next}"
           git push origin "prod-v${next}"
+      - name: Alert deployment success
+        if: success() && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
+        run: |
+          url=$(cat dashboard/deployment-url.txt)
+          curl --fail --silent --show-error \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=✅ Fredb PROD deployed: ${url} (${GITHUB_SHA::7})" \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage"

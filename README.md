@@ -55,8 +55,8 @@ export FREQTRADE__EXCHANGE__SECRET=...
 export FREQTRADE__DRY_RUN=false
 export LIVE_TRADING_ACK='PROD LOCK v1'
 # Configure one alert route:
-export FREQTRADE__TELEGRAM__TOKEN=...
-export FREQTRADE__TELEGRAM__CHAT_ID=...
+export TELEGRAM_BOT_TOKEN=...
+export TELEGRAM_CHAT_ID=...
 # or FREQTRADE__WEBHOOK__URL=<Discord-compatible webhook bridge>
 bash bot/scripts/start_prod.sh
 ```
@@ -67,13 +67,30 @@ ATR/equity position sizing, a three-trade cap, stoploss cooldown/guard,
 drawdown protection, progressive ATR trailing, and a realized-live-PF entry
 circuit breaker at 1.30 (after 20 closed trades).
 
-`walk_forward.yml` runs three fixed, non-overlapping 30-day OOS windows plus
+`bot/scripts/walk_forward.py` and `walk_forward.yml` run three fixed,
+non-overlapping 30-day OOS windows plus
 Freqtrade's lookahead analysis. `deploy_prod.yml` is manual and gated: current
 Backtest, Hyperopt, and Walk Forward runs must all be green; PF must be at
 least 1.5; current Vercel runtime errors must be empty. It deploys the exact
 prebuilt artifact and creates the next immutable `prod-vN` tag.
 Automatic Vercel Git builds are ignored by `dashboard/vercel.json`, preventing
 ordinary pushes and CI result commits from bypassing this release gate.
+
+### Monitoring and telemetry
+
+Set `LIVE_TELEMETRY_URL` and optionally `LIVE_TELEMETRY_TOKEN` in Vercel to a
+private telemetry endpoint returning the shape in
+`dashboard/public/live-status.json`. The dashboard polls `/api/live` every five
+seconds, never substitutes backtest data for live data, and shows a red
+divergence alarm when live PF differs from backtest PF by more than 30% after
+at least 10 closed live trades. Until connected, MODE is explicitly BACKTEST,
+telemetry is DISCONNECTED, live cards are empty, and alerts are MISCONFIGURED.
+
+The live circuit opens when either realized PF across the latest 100 closed
+trades falls below 1.30 (after 20 trades) or today's realized loss reaches 5%
+of equity. New entries are refused and Telegram receives the circuit reason.
+CooldownPeriod enforces 30 minutes after trades, while StoplossGuard and
+MaxDrawdown protections impose longer locks after clustered losses.
 
 ## Deploy
 

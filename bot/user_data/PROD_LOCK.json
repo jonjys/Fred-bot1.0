@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "pf": 2.156,
+  "params": {"buy_adx": 34, "stoploss": -13},
+  "sha": "3ef3724",
+  "promoted_at": "2026-08-21T23:36:25Z",
+  "promotion": {"minimum_oos_pf": 1.5, "minimum_mean_improvement_pct": 10},
+  "risk": {"risk_per_trade": 0.01, "max_open_trades": 3, "daily_loss_limit_pct": -5, "live_pf_floor": 1.3}
+}

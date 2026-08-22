@@ -8,7 +8,9 @@
   "winrate_pct": null,
   "max_drawdown_pct": null,
   "sharpe": null,
+  "avg_trade_duration_minutes": null,
   "open_trades": 0,
   "circuit_breaker": false,
-  "alerting": "none"
+  "alerting": "none",
+  "trades": []
 }

@@ -87,7 +87,7 @@ export default function Home() {
 
       {summary && (
         <div className="space-y-2.5">
-          <OperationsPanel live={live} backtest={summary} />
+          <OperationsPanel initialLive={live} backtest={summary} />
           <HyperoptPanel
             hyperopt={summary.hyperopt}
             strategyVersion={summary.strategy_version}

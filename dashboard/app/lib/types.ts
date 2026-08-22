@@ -106,7 +106,20 @@ export interface LiveStatus {
   winrate_pct: number | null;
   max_drawdown_pct: number | null;
   sharpe: number | null;
+  avg_trade_duration_minutes: number | null;
   open_trades: number;
   circuit_breaker: boolean;
   alerting: "telegram" | "discord" | "none";
+  trades: LiveTrade[];
+}
+
+export interface LiveTrade {
+  id: string;
+  pair: string;
+  side: "long" | "short";
+  opened_at: string;
+  closed_at: string | null;
+  profit_pct: number | null;
+  status: "open" | "closed";
+  exit_reason: string | null;
 }
