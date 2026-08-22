@@ -55,10 +55,15 @@ jobs:
       - name: Lookahead-bias analysis
         working-directory: bot
         run: |
-          freqtrade lookahead-analysis ${{ steps.data.outputs.config }} --userdir user_data --strategy FredbV2ProdStrategy --timerange 20250518-20250816 --minimum-trade-amount 10
+          set -o pipefail
+          freqtrade lookahead-analysis ${{ steps.data.outputs.config }} --userdir user_data --strategy FredbV2ProdStrategy --timerange 20250518-20250816 --minimum-trade-amount 10 --allow-limit-orders --lookahead-analysis-exportfilename lookahead-results.csv 2>&1 | tee lookahead.log
+          ! grep -Eiq "configuration error|traceback|\bERROR\b" lookahead.log
+          python3 scripts/validate_lookahead.py lookahead-results.csv
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: walk-forward-report
           path: |
             bot/walk-forward-report.json
+            bot/lookahead-results.csv
+            bot/lookahead.log
