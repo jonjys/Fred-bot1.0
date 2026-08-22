@@ -9,6 +9,7 @@ on:
       - "bot/user_data/config.json"
       - "bot/user_data/PROD_CONFIG.json"
       - "bot/user_data/PROD_LOCK.json"
+      - "bot/user_data/lookahead-config.json"
       - ".github/workflows/walk_forward.yml"
 
 permissions:
@@ -56,7 +57,7 @@ jobs:
         working-directory: bot
         run: |
           set -o pipefail
-          freqtrade lookahead-analysis ${{ steps.data.outputs.config }} --userdir user_data --strategy FredbV2ProdStrategy --timerange 20250518-20250816 --minimum-trade-amount 10 --allow-limit-orders --lookahead-analysis-exportfilename lookahead-results.csv 2>&1 | tee lookahead.log
+          freqtrade lookahead-analysis ${{ steps.data.outputs.config }} -c user_data/lookahead-config.json --userdir user_data --strategy FredbV2ProdStrategy --timerange 20250518-20250816 --minimum-trade-amount 10 --lookahead-analysis-exportfilename lookahead-results.csv 2>&1 | tee lookahead.log
           ! grep -Eiq "configuration error|traceback|\bERROR\b" lookahead.log
           python3 scripts/validate_lookahead.py lookahead-results.csv
       - uses: actions/upload-artifact@v4

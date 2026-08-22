@@ -52,7 +52,7 @@ jobs:
         working-directory: bot
         run: |
           set -o pipefail
-          freqtrade lookahead-analysis ${{ steps.data.outputs.config }} --userdir user_data --strategy FredbV2Strategy --timerange 20250518-20250816 --minimum-trade-amount 10 --allow-limit-orders --lookahead-analysis-exportfilename candidate-lookahead.csv 2>&1 | tee candidate-lookahead.log
+          freqtrade lookahead-analysis ${{ steps.data.outputs.config }} -c user_data/lookahead-config.json --userdir user_data --strategy FredbV2Strategy --timerange 20250518-20250816 --minimum-trade-amount 10 --lookahead-analysis-exportfilename candidate-lookahead.csv 2>&1 | tee candidate-lookahead.log
           ! grep -Eiq "configuration error|traceback|\bERROR\b" candidate-lookahead.log
           python3 scripts/validate_lookahead.py candidate-lookahead.csv
       - name: Apply explicit promotion gate
