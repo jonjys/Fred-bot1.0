@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import type { BacktestSummary, LiveStatus } from "./types";
+import type { BacktestSummary, LiveStatus, V3Summary } from "./types";
 
 /**
  * The dashboard reads a small, pre-flattened summary from public/, written
@@ -39,6 +39,20 @@ export function getLiveStatus(): LiveStatus {
   };
   if (!fs.existsSync(filePath)) return fallback;
   return { ...fallback, ...JSON.parse(fs.readFileSync(filePath, "utf-8")) };
+}
+
+/**
+ * FredbV3 (experimental) reads its own file - backtest-v3.json, published
+ * only from the fredbv3-quant-redesign branch's own CI, never written by
+ * V2's backtest.yml/hyperopt.yml. Returns null until that's published, same
+ * shape of "not there yet" as getSummary() for V2.
+ */
+export function getV3Summary(): V3Summary | null {
+  const filePath = path.join(process.cwd(), "public", "backtest-v3.json");
+  if (!fs.existsSync(filePath)) {
+    return null;
+  }
+  return JSON.parse(fs.readFileSync(filePath, "utf-8"));
 }
 
 /**

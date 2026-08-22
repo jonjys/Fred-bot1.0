@@ -10,6 +10,11 @@ bot/user_data/backtest_results/*.meta.json
 bot/user_data/backtest_results/.last_result.json
 bot/user_data/notebooks/
 
+bot/user_data/hyperopt.lock
+bot/user_data/hyperopt_results/*.fthypt
+bot/user_data/hyperopt_results/.last_result.json
+bot/user_data/hyperopt_results/hyperopt_tickerdata.pkl
+
 .env
 .env.local
 

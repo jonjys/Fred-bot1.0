@@ -70,6 +70,12 @@ export default function Home() {
             <RunBacktestButton />
             <span className="text-[9px] text-zinc-600">Local only · ⌘K to search</span>
           </div>
+          <a
+            href="/v3"
+            className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-[11px] text-muted hover:text-zinc-200"
+          >
+            V3 (experimental) →
+          </a>
         </div>
       </div>
 

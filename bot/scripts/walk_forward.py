@@ -13,6 +13,18 @@ WINDOWS = (
     ("20250717", "20250816"),
 )
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def parse_windows(raw: str) -> tuple[tuple[str, str], ...]:
+    """Parse '--windows start:end,start:end,...' into the same shape as
+    the WINDOWS constant. Kept optional/additive so existing callers
+    (promote_prod.yml) that don't pass --windows keep using the original
+    V2 validation range unchanged."""
+    parsed = tuple(tuple(pair.split(":")) for pair in raw.split(","))
+    for pair in parsed:
+        if len(pair) != 2:
+            raise SystemExit(f"Invalid --windows segment: {pair!r} (expected start:end)")
+    return parsed
 RESULTS = ROOT / "user_data/backtest_results"
 
 
@@ -34,9 +46,16 @@ def main() -> None:
     parser.add_argument("--config", action="append", required=True)
     parser.add_argument("--strategy", default="FredbV2ProdStrategy")
     parser.add_argument("--output", default="walk-forward-report.json")
+    parser.add_argument(
+        "--windows",
+        default=None,
+        help="Override the default 3 OOS windows: 'start1:end1,start2:end2,start3:end3' "
+        "(YYYYMMDD). Omit to use the original V2 validation range unchanged.",
+    )
     args = parser.parse_args()
+    windows_to_run = parse_windows(args.windows) if args.windows else WINDOWS
     windows = []
-    for index, (start, end) in enumerate(WINDOWS, 1):
+    for index, (start, end) in enumerate(windows_to_run, 1):
         command = ["freqtrade", "backtesting"]
         for config in args.config:
             command += ["-c", config]
