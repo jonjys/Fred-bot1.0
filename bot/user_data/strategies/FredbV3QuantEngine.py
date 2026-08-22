@@ -1,4 +1,3 @@
-# trigger v3 validation
 """FredbV3 quantitative engine with advisory higher-timeframe market bias."""
 from __future__ import annotations
 

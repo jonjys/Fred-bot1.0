@@ -1,0 +1,14 @@
+{
+  "state": "REJECT_UNTIL_VALIDATED",
+  "commit": "d483d01",
+  "gates": {
+    "pf_min": 3.0,
+    "dd_max_pct": 8.0,
+    "sharpe_min": 1.5,
+    "trades_min": 300,
+    "oos_pf_min": 1.5,
+    "bias_check": "required",
+    "fee_stress": "required"
+  },
+  "last_validation": null
+}
