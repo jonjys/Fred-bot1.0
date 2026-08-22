@@ -1,0 +1,44 @@
+{
+  "strategy_name": "FredbV3Strategy",
+  "params": {
+    "roi": {
+      "0": 0.04,
+      "30": 0.02,
+      "90": 0.01,
+      "240": 0
+    },
+    "stoploss": {
+      "stoploss": -0.06
+    },
+    "trailing": {
+      "trailing_stop": true,
+      "trailing_stop_positive": 0.015,
+      "trailing_stop_positive_offset": 0.025,
+      "trailing_only_offset_is_reached": true
+    },
+    "max_open_trades": {
+      "max_open_trades": 4
+    },
+    "buy": {
+      "buy_bb_percent": 0.01,
+      "buy_rsi": 26,
+      "dca_atr_mult": 2.0,
+      "dca_fraction": 0.8,
+      "min_volume_mult": 0.7,
+      "regime_adx_ceiling": 35,
+      "vol_max": 0.026,
+      "vol_min": 0.0025
+    },
+    "sell": {
+      "breakeven_trigger": 0.013,
+      "max_hold_candles": 79,
+      "partial_tp_fraction": 0.3,
+      "partial_tp_r_mult": 0.9,
+      "sell_bb_percent": 0.71,
+      "sell_rsi": 84,
+      "stop_atr_mult": 4.3
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2026-08-22 17:37:34.894770+00:00"
+}

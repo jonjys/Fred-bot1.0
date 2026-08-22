@@ -1,0 +1,1873 @@
+{
+  "strategy": "FredbV3Strategy",
+  "strategy_version": "FredbV3.0-experimental",
+  "exchange": "okx",
+  "trading_mode": "futures",
+  "timeframe": "5m",
+  "informative_timeframe": "1h",
+  "timerange": "20260524-20260822",
+  "generated_at": "2026-08-22T17:39:36.417615+00:00",
+  "total_trades": 71,
+  "trades_per_day": 0.79,
+  "total_profit_pct": 0.44,
+  "total_profit_abs": 4.398,
+  "profit_factor": 1.17,
+  "winrate_pct": 49.3,
+  "wins": 35,
+  "losses": 36,
+  "draws": 0,
+  "max_drawdown_pct": 0.87,
+  "sharpe": 1.0,
+  "sortino": 1.63,
+  "expectancy": 0.0619,
+  "expectancy_ratio": 0.086,
+  "max_consecutive_wins": 10,
+  "max_consecutive_losses": 5,
+  "backtest_start": "2026-05-24 00:00:00",
+  "backtest_end": "2026-08-22 00:00:00",
+  "pairs": [
+    {
+      "pair": "XRP/USDT:USDT",
+      "trades": 13,
+      "avg_profit_pct": 0.33,
+      "total_profit_abs": 3.605,
+      "winrate_pct": 53.85,
+      "sparkline": [
+        -0.151,
+        -0.224,
+        0.845,
+        1.967,
+        2.821,
+        3.94,
+        4.826,
+        3.672,
+        2.955,
+        3.9,
+        4.437,
+        3.879,
+        3.605
+      ]
+    },
+    {
+      "pair": "SOL/USDT:USDT",
+      "trades": 8,
+      "avg_profit_pct": 0.48,
+      "total_profit_abs": 2.177,
+      "winrate_pct": 62.5,
+      "sparkline": [
+        1.401,
+        0.719,
+        1.321,
+        1.954,
+        -0.141,
+        1.692,
+        1.172,
+        2.177
+      ]
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "trades": 16,
+      "avg_profit_pct": 0.28,
+      "total_profit_abs": 2.042,
+      "winrate_pct": 62.5,
+      "sparkline": [
+        0.671,
+        1.509,
+        2.14,
+        2.159,
+        2.997,
+        4.031,
+        5.72,
+        4.859,
+        2.739,
+        2.352,
+        3.268,
+        3.887,
+        4.556,
+        2.844,
+        2.308,
+        2.042
+      ]
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "trades": 22,
+      "avg_profit_pct": 0.11,
+      "total_profit_abs": 1.196,
+      "winrate_pct": 45.45,
+      "sparkline": [
+        -0.144,
+        0.924,
+        1.516,
+        2.24,
+        2.854,
+        2.46,
+        2.435,
+        3.863,
+        2.281,
+        1.105,
+        1.185,
+        0.762,
+        0.589,
+        0.212,
+        1.062,
+        1.722,
+        2.88,
+        1.879,
+        1.564,
+        0.679,
+        1.593,
+        1.196
+      ]
+    },
+    {
+      "pair": "BNB/USDT:USDT",
+      "trades": 7,
+      "avg_profit_pct": -0.26,
+      "total_profit_abs": -1.831,
+      "winrate_pct": 28.57,
+      "sparkline": [
+        -1.957,
+        -2.375,
+        -2.355,
+        -0.99,
+        -1.235,
+        -1.641,
+        -1.831
+      ]
+    },
+    {
+      "pair": "BTC/USDT:USDT",
+      "trades": 5,
+      "avg_profit_pct": -0.75,
+      "total_profit_abs": -2.792,
+      "winrate_pct": 20.0,
+      "sparkline": [
+        0.857,
+        -0.042,
+        -1.352,
+        -2.295,
+        -2.792
+      ]
+    }
+  ],
+  "equity_curve": [
+    {
+      "date": "2026-05-28",
+      "balance": 999.849,
+      "drawdown_pct": 0.015
+    },
+    {
+      "date": "2026-05-29",
+      "balance": 1000.52,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-05-30",
+      "balance": 1000.52,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-05-31",
+      "balance": 1000.447,
+      "drawdown_pct": 0.007
+    },
+    {
+      "date": "2026-06-01",
+      "balance": 999.212,
+      "drawdown_pct": 0.131
+    },
+    {
+      "date": "2026-06-02",
+      "balance": 998.805,
+      "drawdown_pct": 0.171
+    },
+    {
+      "date": "2026-06-03",
+      "balance": 998.805,
+      "drawdown_pct": 0.171
+    },
+    {
+      "date": "2026-06-04",
+      "balance": 998.805,
+      "drawdown_pct": 0.171
+    },
+    {
+      "date": "2026-06-05",
+      "balance": 998.805,
+      "drawdown_pct": 0.171
+    },
+    {
+      "date": "2026-06-06",
+      "balance": 998.805,
+      "drawdown_pct": 0.171
+    },
+    {
+      "date": "2026-06-07",
+      "balance": 1000.997,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-08",
+      "balance": 1002.399,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-09",
+      "balance": 1002.399,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-10",
+      "balance": 1004.825,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-11",
+      "balance": 1005.262,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-12",
+      "balance": 1005.911,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-13",
+      "balance": 1005.911,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-14",
+      "balance": 1005.911,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-15",
+      "balance": 1006.749,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-16",
+      "balance": 1010.921,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-17",
+      "balance": 1011.632,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-18",
+      "balance": 1011.632,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-19",
+      "balance": 1011.632,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-20",
+      "balance": 1011.632,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-21",
+      "balance": 1011.632,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-22",
+      "balance": 1012.454,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-23",
+      "balance": 1013.062,
+      "drawdown_pct": 0.0
+    },
+    {
+      "date": "2026-06-24",
+      "balance": 1011.752,
+      "drawdown_pct": 0.129
+    },
+    {
+      "date": "2026-06-25",
+      "balance": 1011.084,
+      "drawdown_pct": 0.195
+    },
+    {
+      "date": "2026-06-26",
+      "balance": 1012.917,
+      "drawdown_pct": 0.014
+    },
+    {
+      "date": "2026-06-27",
+      "balance": 1012.917,
+      "drawdown_pct": 0.014
+    },
+    {
+      "date": "2026-06-28",
+      "balance": 1012.917,
+      "drawdown_pct": 0.014
+    },
+    {
+      "date": "2026-06-29",
+      "balance": 1010.183,
+      "drawdown_pct": 0.284
+    },
+    {
+      "date": "2026-06-30",
+      "balance": 1010.183,
+      "drawdown_pct": 0.284
+    },
+    {
+      "date": "2026-07-01",
+      "balance": 1008.289,
+      "drawdown_pct": 0.471
+    },
+    {
+      "date": "2026-07-02",
+      "balance": 1008.289,
+      "drawdown_pct": 0.471
+    },
+    {
+      "date": "2026-07-03",
+      "balance": 1008.289,
+      "drawdown_pct": 0.471
+    },
+    {
+      "date": "2026-07-04",
+      "balance": 1008.289,
+      "drawdown_pct": 0.471
+    },
+    {
+      "date": "2026-07-05",
+      "balance": 1008.289,
+      "drawdown_pct": 0.471
+    },
+    {
+      "date": "2026-07-06",
+      "balance": 1008.369,
+      "drawdown_pct": 0.463
+    },
+    {
+      "date": "2026-07-07",
+      "balance": 1004.802,
+      "drawdown_pct": 0.815
+    },
+    {
+      "date": "2026-07-08",
+      "balance": 1005.275,
+      "drawdown_pct": 0.769
+    },
+    {
+      "date": "2026-07-09",
+      "balance": 1005.275,
+      "drawdown_pct": 0.769
+    },
+    {
+      "date": "2026-07-10",
+      "balance": 1005.275,
+      "drawdown_pct": 0.769
+    },
+    {
+      "date": "2026-07-11",
+      "balance": 1005.275,
+      "drawdown_pct": 0.769
+    },
+    {
+      "date": "2026-07-12",
+      "balance": 1005.275,
+      "drawdown_pct": 0.769
+    },
+    {
+      "date": "2026-07-13",
+      "balance": 1006.9,
+      "drawdown_pct": 0.608
+    },
+    {
+      "date": "2026-07-14",
+      "balance": 1007.438,
+      "drawdown_pct": 0.555
+    },
+    {
+      "date": "2026-07-15",
+      "balance": 1007.438,
+      "drawdown_pct": 0.555
+    },
+    {
+      "date": "2026-07-16",
+      "balance": 1008.924,
+      "drawdown_pct": 0.408
+    },
+    {
+      "date": "2026-07-17",
+      "balance": 1008.609,
+      "drawdown_pct": 0.44
+    },
+    {
+      "date": "2026-07-18",
+      "balance": 1008.609,
+      "drawdown_pct": 0.44
+    },
+    {
+      "date": "2026-07-19",
+      "balance": 1008.609,
+      "drawdown_pct": 0.44
+    },
+    {
+      "date": "2026-07-20",
+      "balance": 1008.051,
+      "drawdown_pct": 0.495
+    },
+    {
+      "date": "2026-07-21",
+      "balance": 1008.051,
+      "drawdown_pct": 0.495
+    },
+    {
+      "date": "2026-07-22",
+      "balance": 1008.051,
+      "drawdown_pct": 0.495
+    },
+    {
+      "date": "2026-07-23",
+      "balance": 1008.051,
+      "drawdown_pct": 0.495
+    },
+    {
+      "date": "2026-07-24",
+      "balance": 1008.051,
+      "drawdown_pct": 0.495
+    },
+    {
+      "date": "2026-07-25",
+      "balance": 1008.051,
+      "drawdown_pct": 0.495
+    },
+    {
+      "date": "2026-07-26",
+      "balance": 1008.051,
+      "drawdown_pct": 0.495
+    },
+    {
+      "date": "2026-07-27",
+      "balance": 1006.339,
+      "drawdown_pct": 0.664
+    },
+    {
+      "date": "2026-07-28",
+      "balance": 1006.368,
+      "drawdown_pct": 0.661
+    },
+    {
+      "date": "2026-07-29",
+      "balance": 1006.368,
+      "drawdown_pct": 0.661
+    },
+    {
+      "date": "2026-07-30",
+      "balance": 1006.368,
+      "drawdown_pct": 0.661
+    },
+    {
+      "date": "2026-07-31",
+      "balance": 1006.368,
+      "drawdown_pct": 0.661
+    },
+    {
+      "date": "2026-08-01",
+      "balance": 1006.368,
+      "drawdown_pct": 0.661
+    },
+    {
+      "date": "2026-08-02",
+      "balance": 1006.368,
+      "drawdown_pct": 0.661
+    },
+    {
+      "date": "2026-08-03",
+      "balance": 1005.597,
+      "drawdown_pct": 0.737
+    },
+    {
+      "date": "2026-08-04",
+      "balance": 1005.597,
+      "drawdown_pct": 0.737
+    },
+    {
+      "date": "2026-08-05",
+      "balance": 1005.597,
+      "drawdown_pct": 0.737
+    },
+    {
+      "date": "2026-08-06",
+      "balance": 1005.597,
+      "drawdown_pct": 0.737
+    },
+    {
+      "date": "2026-08-07",
+      "balance": 1005.597,
+      "drawdown_pct": 0.737
+    },
+    {
+      "date": "2026-08-08",
+      "balance": 1005.597,
+      "drawdown_pct": 0.737
+    },
+    {
+      "date": "2026-08-09",
+      "balance": 1005.597,
+      "drawdown_pct": 0.737
+    },
+    {
+      "date": "2026-08-10",
+      "balance": 1005.2,
+      "drawdown_pct": 0.776
+    },
+    {
+      "date": "2026-08-11",
+      "balance": 1005.2,
+      "drawdown_pct": 0.776
+    },
+    {
+      "date": "2026-08-12",
+      "balance": 1004.398,
+      "drawdown_pct": 0.855
+    }
+  ],
+  "trades": [
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.00191,
+      "profit_abs": -0.151,
+      "open_date": "2026-05-28 16:50:00+00:00",
+      "close_date": "2026-05-28 17:20:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01343,
+      "profit_abs": 0.671,
+      "open_date": "2026-05-29 15:40:00+00:00",
+      "close_date": "2026-05-29 15:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00078,
+      "profit_abs": -0.074,
+      "open_date": "2026-05-31 14:25:00+00:00",
+      "close_date": "2026-05-31 15:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BNB/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.013,
+      "profit_abs": -1.957,
+      "open_date": "2026-06-01 04:10:00+00:00",
+      "close_date": "2026-06-01 04:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BNB/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00389,
+      "profit_abs": -0.418,
+      "open_date": "2026-06-01 06:10:00+00:00",
+      "close_date": "2026-06-01 06:40:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BNB/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.00018,
+      "profit_abs": 0.02,
+      "open_date": "2026-06-01 06:45:00+00:00",
+      "close_date": "2026-06-01 07:15:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BNB/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.00794,
+      "profit_abs": 1.366,
+      "open_date": "2026-06-01 07:30:00+00:00",
+      "close_date": "2026-06-01 09:15:00+00:00",
+      "exit_reason": "roi",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BNB/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00288,
+      "profit_abs": -0.245,
+      "open_date": "2026-06-01 13:55:00+00:00",
+      "close_date": "2026-06-01 13:55:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BNB/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00374,
+      "profit_abs": -0.406,
+      "open_date": "2026-06-02 19:05:00+00:00",
+      "close_date": "2026-06-02 19:25:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01192,
+      "profit_abs": 1.07,
+      "open_date": "2026-06-07 01:30:00+00:00",
+      "close_date": "2026-06-07 02:25:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.00996,
+      "profit_abs": 1.122,
+      "open_date": "2026-06-07 18:15:00+00:00",
+      "close_date": "2026-06-07 18:40:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "SOL/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01283,
+      "profit_abs": 1.401,
+      "open_date": "2026-06-08 21:10:00+00:00",
+      "close_date": "2026-06-08 21:55:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.00197,
+      "profit_abs": -0.144,
+      "open_date": "2026-06-10 12:40:00+00:00",
+      "close_date": "2026-06-10 13:30:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BNB/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.00268,
+      "profit_abs": -0.189,
+      "open_date": "2026-06-10 12:40:00+00:00",
+      "close_date": "2026-06-10 13:30:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01491,
+      "profit_abs": 1.067,
+      "open_date": "2026-06-10 13:45:00+00:00",
+      "close_date": "2026-06-10 13:50:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01185,
+      "profit_abs": 0.854,
+      "open_date": "2026-06-10 13:45:00+00:00",
+      "close_date": "2026-06-10 14:00:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01108,
+      "profit_abs": 0.838,
+      "open_date": "2026-06-10 13:50:00+00:00",
+      "close_date": "2026-06-10 14:00:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "SOL/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.00506,
+      "profit_abs": -0.682,
+      "open_date": "2026-06-11 00:20:00+00:00",
+      "close_date": "2026-06-11 01:00:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01081,
+      "profit_abs": 1.119,
+      "open_date": "2026-06-11 01:50:00+00:00",
+      "close_date": "2026-06-11 02:15:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.01172,
+      "profit_abs": 0.631,
+      "open_date": "2026-06-12 06:40:00+00:00",
+      "close_date": "2026-06-12 08:00:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.00017,
+      "profit_abs": 0.019,
+      "open_date": "2026-06-12 18:20:00+00:00",
+      "close_date": "2026-06-12 19:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.01251,
+      "profit_abs": 0.838,
+      "open_date": "2026-06-15 14:45:00+00:00",
+      "close_date": "2026-06-15 15:40:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.01077,
+      "profit_abs": 0.592,
+      "open_date": "2026-06-16 14:35:00+00:00",
+      "close_date": "2026-06-16 15:05:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.01037,
+      "profit_abs": 1.035,
+      "open_date": "2026-06-16 14:25:00+00:00",
+      "close_date": "2026-06-16 15:35:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.00995,
+      "profit_abs": 1.689,
+      "open_date": "2026-06-16 16:45:00+00:00",
+      "close_date": "2026-06-16 17:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BTC/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.00817,
+      "profit_abs": 0.857,
+      "open_date": "2026-06-16 14:25:00+00:00",
+      "close_date": "2026-06-16 17:50:00+00:00",
+      "exit_reason": "roi",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.00953,
+      "profit_abs": 0.725,
+      "open_date": "2026-06-17 12:30:00+00:00",
+      "close_date": "2026-06-17 13:05:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.00924,
+      "profit_abs": 0.886,
+      "open_date": "2026-06-17 19:30:00+00:00",
+      "close_date": "2026-06-17 21:00:00+00:00",
+      "exit_reason": "roi",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BTC/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.01036,
+      "profit_abs": -0.9,
+      "open_date": "2026-06-17 19:30:00+00:00",
+      "close_date": "2026-06-17 22:00:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01113,
+      "profit_abs": 0.614,
+      "open_date": "2026-06-22 01:30:00+00:00",
+      "close_date": "2026-06-22 02:05:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00503,
+      "profit_abs": -0.394,
+      "open_date": "2026-06-22 16:10:00+00:00",
+      "close_date": "2026-06-22 16:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "SOL/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.00796,
+      "profit_abs": 0.602,
+      "open_date": "2026-06-22 16:15:00+00:00",
+      "close_date": "2026-06-22 17:50:00+00:00",
+      "exit_reason": "roi",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00043,
+      "profit_abs": -0.025,
+      "open_date": "2026-06-23 06:30:00+00:00",
+      "close_date": "2026-06-23 07:35:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "SOL/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.01165,
+      "profit_abs": 0.633,
+      "open_date": "2026-06-23 08:25:00+00:00",
+      "close_date": "2026-06-23 08:35:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BTC/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.01394,
+      "profit_abs": -1.31,
+      "open_date": "2026-06-24 20:15:00+00:00",
+      "close_date": "2026-06-24 20:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.00957,
+      "profit_abs": 1.427,
+      "open_date": "2026-06-25 22:05:00+00:00",
+      "close_date": "2026-06-25 22:15:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "SOL/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.01607,
+      "profit_abs": -2.095,
+      "open_date": "2026-06-25 23:30:00+00:00",
+      "close_date": "2026-06-25 23:30:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "SOL/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01245,
+      "profit_abs": 1.833,
+      "open_date": "2026-06-26 07:10:00+00:00",
+      "close_date": "2026-06-26 08:10:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.02061,
+      "profit_abs": -1.581,
+      "open_date": "2026-06-29 17:15:00+00:00",
+      "close_date": "2026-06-29 17:15:00+00:00",
+      "exit_reason": "stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.01255,
+      "profit_abs": -1.153,
+      "open_date": "2026-06-29 17:15:00+00:00",
+      "close_date": "2026-06-29 19:20:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.01055,
+      "profit_abs": -1.177,
+      "open_date": "2026-07-01 13:55:00+00:00",
+      "close_date": "2026-07-01 14:10:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.01022,
+      "profit_abs": -0.717,
+      "open_date": "2026-07-01 13:55:00+00:00",
+      "close_date": "2026-07-01 14:10:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.00131,
+      "profit_abs": 0.08,
+      "open_date": "2026-07-06 12:05:00+00:00",
+      "close_date": "2026-07-06 12:40:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00856,
+      "profit_abs": -0.861,
+      "open_date": "2026-07-07 01:30:00+00:00",
+      "close_date": "2026-07-07 02:20:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00461,
+      "profit_abs": -0.423,
+      "open_date": "2026-07-07 02:35:00+00:00",
+      "close_date": "2026-07-07 03:15:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.01267,
+      "profit_abs": -2.12,
+      "open_date": "2026-07-07 02:35:00+00:00",
+      "close_date": "2026-07-07 03:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00402,
+      "profit_abs": -0.387,
+      "open_date": "2026-07-07 04:25:00+00:00",
+      "close_date": "2026-07-07 05:10:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.00957,
+      "profit_abs": 0.916,
+      "open_date": "2026-07-07 05:20:00+00:00",
+      "close_date": "2026-07-07 05:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00095,
+      "profit_abs": -0.173,
+      "open_date": "2026-07-07 19:00:00+00:00",
+      "close_date": "2026-07-07 20:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "SOL/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00304,
+      "profit_abs": -0.519,
+      "open_date": "2026-07-07 19:00:00+00:00",
+      "close_date": "2026-07-07 20:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00525,
+      "profit_abs": -0.377,
+      "open_date": "2026-07-08 08:30:00+00:00",
+      "close_date": "2026-07-08 08:40:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.01164,
+      "profit_abs": 0.85,
+      "open_date": "2026-07-08 15:15:00+00:00",
+      "close_date": "2026-07-08 16:20:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01164,
+      "profit_abs": 0.619,
+      "open_date": "2026-07-13 00:20:00+00:00",
+      "close_date": "2026-07-13 00:30:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "SOL/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01742,
+      "profit_abs": 1.005,
+      "open_date": "2026-07-13 00:15:00+00:00",
+      "close_date": "2026-07-13 00:35:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.0179,
+      "profit_abs": 0.944,
+      "open_date": "2026-07-13 00:15:00+00:00",
+      "close_date": "2026-07-13 00:35:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BTC/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.01103,
+      "profit_abs": -0.943,
+      "open_date": "2026-07-13 02:00:00+00:00",
+      "close_date": "2026-07-13 03:05:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": 0.01084,
+      "profit_abs": 0.538,
+      "open_date": "2026-07-14 13:30:00+00:00",
+      "close_date": "2026-07-14 13:45:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.01212,
+      "profit_abs": 0.66,
+      "open_date": "2026-07-16 08:20:00+00:00",
+      "close_date": "2026-07-16 08:25:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.01109,
+      "profit_abs": 0.669,
+      "open_date": "2026-07-16 08:20:00+00:00",
+      "close_date": "2026-07-16 08:35:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.01489,
+      "profit_abs": 1.158,
+      "open_date": "2026-07-16 15:15:00+00:00",
+      "close_date": "2026-07-16 15:25:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.01082,
+      "profit_abs": -1.001,
+      "open_date": "2026-07-16 17:15:00+00:00",
+      "close_date": "2026-07-16 17:15:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00454,
+      "profit_abs": -0.315,
+      "open_date": "2026-07-17 01:55:00+00:00",
+      "close_date": "2026-07-17 02:10:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.00873,
+      "profit_abs": -0.558,
+      "open_date": "2026-07-20 15:55:00+00:00",
+      "close_date": "2026-07-20 17:00:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.01693,
+      "profit_abs": -1.712,
+      "open_date": "2026-07-27 14:25:00+00:00",
+      "close_date": "2026-07-27 14:30:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.01149,
+      "profit_abs": -0.885,
+      "open_date": "2026-07-28 00:55:00+00:00",
+      "close_date": "2026-07-28 01:05:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": 0.01176,
+      "profit_abs": 0.915,
+      "open_date": "2026-07-28 17:45:00+00:00",
+      "close_date": "2026-07-28 18:00:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "BTC/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.0104,
+      "profit_abs": -0.497,
+      "open_date": "2026-08-03 14:35:00+00:00",
+      "close_date": "2026-08-03 14:55:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "XRP/USDT:USDT",
+      "is_short": true,
+      "enter_tag": "mr_short",
+      "leverage": 2.0,
+      "profit_ratio": -0.00552,
+      "profit_abs": -0.274,
+      "open_date": "2026-08-03 14:35:00+00:00",
+      "close_date": "2026-08-03 15:25:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "ETH/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00799,
+      "profit_abs": -0.397,
+      "open_date": "2026-08-10 15:25:00+00:00",
+      "close_date": "2026-08-10 16:20:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00957,
+      "profit_abs": -0.536,
+      "open_date": "2026-08-12 13:15:00+00:00",
+      "close_date": "2026-08-12 13:25:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    },
+    {
+      "pair": "DOGE/USDT:USDT",
+      "is_short": false,
+      "enter_tag": "mr_long",
+      "leverage": 2.0,
+      "profit_ratio": -0.00423,
+      "profit_abs": -0.266,
+      "open_date": "2026-08-12 21:35:00+00:00",
+      "close_date": "2026-08-12 21:55:00+00:00",
+      "exit_reason": "trailing_stop_loss",
+      "dca_used": false,
+      "partial_tp_used": false
+    }
+  ],
+  "open_trades": [],
+  "current_streak": {
+    "count": 5,
+    "type": "loss"
+  },
+  "profit_split": {
+    "gross_profit_abs": 30.261,
+    "gross_loss_abs": 25.863,
+    "avg_win_abs": 0.865,
+    "avg_loss_abs": -0.718
+  },
+  "win_loss_sizes": {
+    "buckets": [
+      {
+        "range_low": -2.06,
+        "range_high": -1.68,
+        "count": 2
+      },
+      {
+        "range_low": -1.68,
+        "range_high": -1.29,
+        "count": 3
+      },
+      {
+        "range_low": -1.29,
+        "range_high": -0.91,
+        "count": 10
+      },
+      {
+        "range_low": -0.91,
+        "range_high": -0.52,
+        "count": 5
+      },
+      {
+        "range_low": -0.52,
+        "range_high": -0.14,
+        "count": 13
+      },
+      {
+        "range_low": -0.14,
+        "range_high": 0.25,
+        "count": 6
+      },
+      {
+        "range_low": 0.25,
+        "range_high": 0.63,
+        "count": 0
+      },
+      {
+        "range_low": 0.63,
+        "range_high": 1.02,
+        "count": 9
+      },
+      {
+        "range_low": 1.02,
+        "range_high": 1.4,
+        "count": 19
+      },
+      {
+        "range_low": 1.4,
+        "range_high": 1.79,
+        "count": 4
+      }
+    ],
+    "bucket_size": 0.385
+  },
+  "winrate_trend": [
+    {
+      "index": 1,
+      "winrate_pct": 0.0
+    },
+    {
+      "index": 2,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 3,
+      "winrate_pct": 33.3
+    },
+    {
+      "index": 4,
+      "winrate_pct": 25.0
+    },
+    {
+      "index": 5,
+      "winrate_pct": 20.0
+    },
+    {
+      "index": 6,
+      "winrate_pct": 33.3
+    },
+    {
+      "index": 7,
+      "winrate_pct": 42.9
+    },
+    {
+      "index": 8,
+      "winrate_pct": 37.5
+    },
+    {
+      "index": 9,
+      "winrate_pct": 33.3
+    },
+    {
+      "index": 10,
+      "winrate_pct": 40.0
+    },
+    {
+      "index": 11,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 12,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 13,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 14,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 15,
+      "winrate_pct": 60.0
+    },
+    {
+      "index": 16,
+      "winrate_pct": 60.0
+    },
+    {
+      "index": 17,
+      "winrate_pct": 60.0
+    },
+    {
+      "index": 18,
+      "winrate_pct": 60.0
+    },
+    {
+      "index": 19,
+      "winrate_pct": 70.0
+    },
+    {
+      "index": 20,
+      "winrate_pct": 70.0
+    },
+    {
+      "index": 21,
+      "winrate_pct": 70.0
+    },
+    {
+      "index": 22,
+      "winrate_pct": 70.0
+    },
+    {
+      "index": 23,
+      "winrate_pct": 80.0
+    },
+    {
+      "index": 24,
+      "winrate_pct": 90.0
+    },
+    {
+      "index": 25,
+      "winrate_pct": 90.0
+    },
+    {
+      "index": 26,
+      "winrate_pct": 90.0
+    },
+    {
+      "index": 27,
+      "winrate_pct": 90.0
+    },
+    {
+      "index": 28,
+      "winrate_pct": 100.0
+    },
+    {
+      "index": 29,
+      "winrate_pct": 90.0
+    },
+    {
+      "index": 30,
+      "winrate_pct": 90.0
+    },
+    {
+      "index": 31,
+      "winrate_pct": 80.0
+    },
+    {
+      "index": 32,
+      "winrate_pct": 80.0
+    },
+    {
+      "index": 33,
+      "winrate_pct": 70.0
+    },
+    {
+      "index": 34,
+      "winrate_pct": 70.0
+    },
+    {
+      "index": 35,
+      "winrate_pct": 60.0
+    },
+    {
+      "index": 36,
+      "winrate_pct": 60.0
+    },
+    {
+      "index": 37,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 38,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 39,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 40,
+      "winrate_pct": 40.0
+    },
+    {
+      "index": 41,
+      "winrate_pct": 40.0
+    },
+    {
+      "index": 42,
+      "winrate_pct": 30.0
+    },
+    {
+      "index": 43,
+      "winrate_pct": 40.0
+    },
+    {
+      "index": 44,
+      "winrate_pct": 30.0
+    },
+    {
+      "index": 45,
+      "winrate_pct": 30.0
+    },
+    {
+      "index": 46,
+      "winrate_pct": 20.0
+    },
+    {
+      "index": 47,
+      "winrate_pct": 20.0
+    },
+    {
+      "index": 48,
+      "winrate_pct": 20.0
+    },
+    {
+      "index": 49,
+      "winrate_pct": 20.0
+    },
+    {
+      "index": 50,
+      "winrate_pct": 20.0
+    },
+    {
+      "index": 51,
+      "winrate_pct": 20.0
+    },
+    {
+      "index": 52,
+      "winrate_pct": 30.0
+    },
+    {
+      "index": 53,
+      "winrate_pct": 30.0
+    },
+    {
+      "index": 54,
+      "winrate_pct": 40.0
+    },
+    {
+      "index": 55,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 56,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 57,
+      "winrate_pct": 60.0
+    },
+    {
+      "index": 58,
+      "winrate_pct": 60.0
+    },
+    {
+      "index": 59,
+      "winrate_pct": 70.0
+    },
+    {
+      "index": 60,
+      "winrate_pct": 80.0
+    },
+    {
+      "index": 61,
+      "winrate_pct": 80.0
+    },
+    {
+      "index": 62,
+      "winrate_pct": 70.0
+    },
+    {
+      "index": 63,
+      "winrate_pct": 60.0
+    },
+    {
+      "index": 64,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 65,
+      "winrate_pct": 40.0
+    },
+    {
+      "index": 66,
+      "winrate_pct": 50.0
+    },
+    {
+      "index": 67,
+      "winrate_pct": 40.0
+    },
+    {
+      "index": 68,
+      "winrate_pct": 30.0
+    },
+    {
+      "index": 69,
+      "winrate_pct": 20.0
+    },
+    {
+      "index": 70,
+      "winrate_pct": 10.0
+    },
+    {
+      "index": 71,
+      "winrate_pct": 10.0
+    }
+  ],
+  "direction_split": {
+    "long": {
+      "trades": 43,
+      "winrate_pct": 46.51,
+      "profit_factor": 0.987,
+      "total_profit_abs": -0.196
+    },
+    "short": {
+      "trades": 28,
+      "winrate_pct": 53.57,
+      "profit_factor": 1.436,
+      "total_profit_abs": 4.595
+    }
+  },
+  "position_management": {
+    "dca_trades": 0,
+    "dca_trades_pct": 0.0,
+    "dca_avg_profit_pct": 0.0,
+    "no_dca_avg_profit_pct": 0.133,
+    "partial_tp_trades": 0,
+    "partial_tp_trades_pct": 0.0,
+    "partial_tp_avg_profit_pct": 0.0,
+    "no_partial_tp_avg_profit_pct": 0.133
+  },
+  "exit_reason_breakdown": {
+    "trailing_stop_loss": 66,
+    "roi": 4,
+    "stop_loss": 1
+  },
+  "circuit_breakers": {
+    "protections": [
+      {
+        "method": "CooldownPeriod",
+        "stop_duration_candles": 3
+      },
+      {
+        "method": "StoplossGuard",
+        "lookback_period_candles": 96,
+        "trade_limit": 3,
+        "stop_duration_candles": 24,
+        "only_per_pair": true
+      },
+      {
+        "method": "MaxDrawdown",
+        "lookback_period_candles": 288,
+        "trade_limit": 10,
+        "stop_duration_candles": 12,
+        "max_allowed_drawdown": 0.08
+      }
+    ],
+    "max_allowed_drawdown_pct": 8.0,
+    "current_max_drawdown_pct": 0.87
+  },
+  "prod_lock_status": "EXPERIMENTAL - not PROD LOCKED"
+}

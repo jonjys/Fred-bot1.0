@@ -1,0 +1,39 @@
+{
+  "schema": "fredb.walk_forward.v1",
+  "strategy": "FredbV3Strategy",
+  "windows": [
+    {
+      "profit_factor": 3.2401374486352195,
+      "trades": 32,
+      "max_drawdown_pct": 0.245,
+      "sharpe": 10.14486332319112,
+      "window": 1,
+      "start": "20260524",
+      "end": "20260623"
+    },
+    {
+      "profit_factor": 0.6944751529660882,
+      "trades": 36,
+      "max_drawdown_pct": 0.665,
+      "sharpe": -3.4660287595048547,
+      "window": 2,
+      "start": "20260623",
+      "end": "20260723"
+    },
+    {
+      "profit_factor": 1.6417003727330115,
+      "trades": 7,
+      "max_drawdown_pct": 0.088,
+      "sharpe": 0.95777343259756,
+      "window": 3,
+      "start": "20260723",
+      "end": "20260822"
+    }
+  ],
+  "mean_oos_profit_factor": 1.8588,
+  "all_windows_pf_gt_1_5": false,
+  "all_windows_pf_gte_1_5": false,
+  "failed_windows": [
+    2
+  ]
+}
