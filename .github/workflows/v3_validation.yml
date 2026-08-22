@@ -1,0 +1,169 @@
+name: v3_validation
+
+on:
+  push:
+    branches: ["feat/**"]
+    paths:
+      - ".github/workflows/v3_validation.yml"
+      - "bot/scripts/walk_forward_v3.py"
+      - "bot/scripts/validate_lookahead.py"
+      - "bot/user_data/config-v3.json"
+      - "bot/user_data/PROD_LOCK_V3.json"
+      - "bot/user_data/strategies/FredbV3Strategy.py"
+      - "**/FredbV3QuantEngine.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v3-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    container:
+      image: freqtradeorg/freqtrade:stable
+      options: --user root
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Activate Freqtrade from the official image
+        run: |
+          site_packages="$(find /home/ftuser/.local/lib -type d -name site-packages | head -n 1)"
+          test -n "$site_packages"
+          test -f "/freqtrade/freqtrade/__init__.py"
+          echo "PYTHONPATH=/freqtrade:$site_packages" >> "$GITHUB_ENV"
+
+      - name: Keep candidate fail-closed
+        working-directory: bot
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          lock = json.loads(Path("user_data/PROD_LOCK_V3.json").read_text())
+          if lock.get("state") != "REJECT_UNTIL_VALIDATED":
+              raise SystemExit("PROD_LOCK_V3.json must remain REJECT_UNTIL_VALIDATED")
+          PY
+
+      - name: Cache OKX market data
+        id: market-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: bot/user_data/data
+          key: okx-v3-data-20260520-20260822-v1
+          restore-keys: |
+            okx-v3-data-
+
+      - name: Download OKX futures data
+        working-directory: bot
+        run: |
+          freqtrade download-data \
+            --config user_data/config-v3.json \
+            --userdir user_data \
+            --pairs BTC/USDT:USDT ETH/USDT:USDT SOL/USDT:USDT \
+            --timeframes 1m 15m \
+            --timerange 20260520-20260822
+
+      - name: Save OKX market data cache
+        if: steps.market-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: bot/user_data/data
+          key: okx-v3-data-20260520-20260822-v1
+
+      - name: Backtest 20260524-20260822
+        working-directory: bot
+        run: |
+          set -o pipefail
+          freqtrade backtesting \
+            --config user_data/config-v3.json \
+            --userdir user_data \
+            --strategy FredbV3QuantEngine \
+            --timerange 20260524-20260822 \
+            --cache none \
+            --export trades \
+            2>&1 | tee v3-base.log
+          ! grep -Eiq "configuration error|traceback|\\bERROR\\b" v3-base.log
+          python scripts/walk_forward_v3.py copy-latest --output v3_base.zip
+          test -s user_data/backtest_results/v3_base.zip
+
+      - name: Walk forward 3x30d OOS
+        working-directory: bot
+        run: |
+          python scripts/walk_forward_v3.py run \
+            --config user_data/config-v3.json \
+            --strategy FredbV3QuantEngine \
+            --output user_data/backtest_results/walk_forward_v3.json
+
+      - name: Fee stress at 0.10% per side
+        working-directory: bot
+        run: |
+          set -o pipefail
+          freqtrade backtesting \
+            --config user_data/config-v3.json \
+            --userdir user_data \
+            --strategy FredbV3QuantEngine \
+            --timerange 20260524-20260822 \
+            --fee 0.001 \
+            --cache none \
+            --export trades \
+            2>&1 | tee v3-fee-stress.log
+          ! grep -Eiq "configuration error|traceback|\\bERROR\\b" v3-fee-stress.log
+          python scripts/walk_forward_v3.py copy-latest --output v3_fee_stress.zip
+          test -s user_data/backtest_results/v3_fee_stress.zip
+
+      - name: Lookahead-bias analysis
+        working-directory: bot
+        run: |
+          set -o pipefail
+          bias_status=FAIL
+          if freqtrade lookahead-analysis \
+              --config user_data/config-v3.json \
+              --userdir user_data \
+              --strategy FredbV3QuantEngine \
+              --timerange 20260524-20260822 \
+              --minimum-trade-amount 10 \
+              --allow-limit-orders \
+              --lookahead-analysis-exportfilename lookahead-v3.csv \
+              2>&1 | tee lookahead-v3.log
+          then
+            if ! grep -Eiq "configuration error|traceback|\\bERROR\\b" lookahead-v3.log \
+                && python scripts/validate_lookahead.py lookahead-v3.csv
+            then
+              bias_status=PASS
+            fi
+          fi
+          echo "BIAS_STATUS=$bias_status" >> "$GITHUB_ENV"
+
+      - name: Apply hard promotion gates
+        working-directory: bot
+        env:
+          VALIDATED_COMMIT: ${{ github.sha }}
+        run: |
+          python scripts/walk_forward_v3.py validate \
+            --base user_data/backtest_results/v3_base.zip \
+            --walk-forward user_data/backtest_results/walk_forward_v3.json \
+            --fee-stress user_data/backtest_results/v3_fee_stress.zip \
+            --output user_data/backtest_results/v3_validation_report.json
+
+      - name: Upload proof artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fredbv3-validation-${{ github.sha }}
+          if-no-files-found: warn
+          path: |
+            bot/user_data/backtest_results/v3_base.zip
+            bot/user_data/backtest_results/v3_fee_stress.zip
+            bot/user_data/backtest_results/wf_v3_*.zip
+            bot/user_data/backtest_results/walk_forward_v3.json
+            bot/user_data/backtest_results/v3_validation_report.json
+            bot/v3-base.log
+            bot/v3-fee-stress.log
+            bot/lookahead-v3.csv
+            bot/lookahead-v3.log
