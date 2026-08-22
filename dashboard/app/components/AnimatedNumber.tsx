@@ -34,10 +34,16 @@ export default function AnimatedNumber({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
+  // Number#toFixed follows the underlying binary float (2.155 can become
+  // 2.15). Round to the requested decimal precision first so financial
+  // metrics use deterministic half-up presentation.
+  const factor = 10 ** decimals;
+  const roundedDisplay = Math.round((display + Math.sign(display) * Number.EPSILON) * factor) / factor;
+
   return (
     <>
       {prefix}
-      {display.toFixed(decimals)}
+      {roundedDisplay.toFixed(decimals)}
       {suffix}
     </>
   );
